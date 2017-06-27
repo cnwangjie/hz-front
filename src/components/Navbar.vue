@@ -1,0 +1,103 @@
+<template lang="html">
+  <div class="header">
+    <ul class="nav nav-pills hz-nav">
+      <li v-for="nav in navs" role="presentation">
+        <a v-bind:href="nav.link" v-bind:class="nav.active ? 'active' : ''">{{ nav.title }}</a>
+      </li>
+    </ul>
+    <div class="pic">
+      <h1 class="site-name">徽州文化服务云平台</h1>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      navs: [
+        {
+          link: '#',
+          title: '首页',
+          active: true
+        },
+        {
+          link: '#',
+          title: 'not active',
+          active: false
+        }
+      ]
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.header {
+  text-align: center;
+  margin-top: 10px;
+  max-width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hz-nav {
+  position: relative;
+  li {
+    width: 114px;
+    border-radius: 0;
+    background: #d7d6d2;
+    text-align: center;
+    .active {
+      color: #d7d6d2;
+      background-size: cover;
+      background-position: center 50%;
+      background-repeat: no-repeat;
+      background: url(/static/nav-item-bg.png);
+    }
+    a {
+      border-radius: 0;
+      color: #000;
+      background: #d7d6d2;
+      &:hover,&:focus {
+        border-radius: 0;
+        color: #d7d6d2;
+        background-size: cover;
+        background-position: center 50%;
+        background-repeat: no-repeat;
+        background: url(/static/nav-item-bg.png);
+      }
+    }
+    // &:hover + &:active + &:focus {
+    //   background-size: cover;
+    //   background-position: center 50%;
+    //   background-repeat: no-repeat;
+    //   background: url(/static/nav-item-bg.png);
+    // }
+  }
+}
+
+.title {
+  height: 80px;
+  /*width: 110px;*/
+  position: relative;
+  display: block;
+  float: left;
+}
+
+.pic {
+  background: url(/static/blank.png);
+  background-position: center 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  width: 100%;
+  height: 290px;
+  line-height: 290px;
+  color: rgb(0, 0, 0);
+  text-shadow: 0px 0px 6px white;
+}
+
+.site-name {
+  line-height: 290px;
+}
+
+</style>
