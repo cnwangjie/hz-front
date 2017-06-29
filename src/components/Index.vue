@@ -16,21 +16,30 @@
 
 <script>
 import sidebar from './Sidebar'
+import {getArticle} from './../service/getData'
+
 export default {
   data() {
-    let r = []
-    for (let i = 0; i < 10; i += 1) {
-      r.push({
-        title: `t${i}`,
-        content: `tc${i}`
-      })
-    }
     return {
-      articles: r
+      articles: [],
+      page: 0,
     }
   },
   components: {
     sidebar
+  },
+  created() {
+    this.getData(0)
+  },
+  methods: {
+    getData(page = 0) {
+      getArticle(page).then(obj => {
+        obj.map(i => {
+          this.articles.push(i)
+        })
+        this.page += 1
+      })
+    }
   }
 }
 </script>

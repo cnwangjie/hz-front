@@ -1,25 +1,25 @@
 <template>
   <div id="app">
-    <Navbar></Navbar>
+    <navbar></navbar>
     <div class="container main">
 
       <router-view></router-view>
 
     </div>
-    <Footer></Footer>
+    <foot></foot>
   </div>
 </template>
 
 <script>
 import './assets/jquery.min.js'
 import './assets/bootstrap.min.js'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import navbar from './components/Navbar'
+import foot from './components/Foot'
 export default {
   name: 'app',
   components: {
-    Navbar,
-    Footer
+    navbar,
+    foot
   }
 }
 </script>
