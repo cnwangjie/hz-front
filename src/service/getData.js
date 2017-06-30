@@ -7,4 +7,10 @@ const fetchData = (url = '', method = 'GET', body = {}) => {
   }).then(data => data.json())
 }
 
-export const getArticle = page => fetchData(`/api/article/lastest?page=${page}`)
+export const getLastestArticle = page => {
+  return fetchData(`/api/article/lastest?page=${page}`)
+}
+
+export const getArticle = id => fetchData(`/api/article/${id}`)
+
+export const getNav = () => fetchData(`/api/nav`)

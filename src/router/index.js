@@ -10,15 +10,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Index
+      component: Index,
+      name: 'home'
     },
     {
       path: '/page/:pagename',
-      component: Page
+      component: Page,
+      name: 'page'
     },
     {
       path: '/article/:id',
-      component: Article
+      component: Article,
+      name: 'article'
     }
   ]
 })

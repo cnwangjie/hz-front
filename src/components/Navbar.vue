@@ -2,7 +2,7 @@
   <div class="header">
     <ul class="nav nav-pills hz-nav">
       <li v-for="nav in navs" role="presentation">
-        <a v-bind:href="nav.link" v-bind:class="nav.active ? 'active' : ''">{{ nav.title }}</a>
+        <router-link :to="nav.link" v-bind:class="nav.active ? 'active' : ''">{{ nav.title }}</router-link>
       </li>
     </ul>
     <div class="pic">
@@ -12,22 +12,22 @@
 </template>
 
 <script>
+import {getNav} from './../service/getData'
+
 export default {
   data() {
     return {
-      navs: [
-        {
-          link: '#',
-          title: '首页',
-          active: true
-        },
-        {
-          link: '#',
-          title: 'not active',
-          active: false
-        }
-      ]
+      navs: []
     }
+  },
+  created() {
+    getNav().then(obj => {
+      obj.map(i => {
+        i.active = this.$route.name === i.name
+
+        this.navs.push(i)
+      })
+    })
   }
 }
 </script>

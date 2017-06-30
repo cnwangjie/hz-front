@@ -2,13 +2,16 @@
     <div class="row">
       <div class="col-sm-offset-1 col-sm-7">
         <div v-for="article in articles" class="article-list">
-          <div class="head">
-            <strong>{{ article.title }}</strong>
-          </div>
+          <router-link :to="`article/${article.id}`">
+            <div class="head">
+              <strong>{{ article.title }}</strong>
+            </div>
+          </router-link>
           <div class="content">
             {{ article.content }}
           </div>
         </div>
+        <button class="btn btn-lg center-block" style="background:#dddcd9" v-on:click="getData()">加载更多</button>
       </div>
       <sidebar></sidebar>
     </div>
@@ -16,7 +19,7 @@
 
 <script>
 import sidebar from './Sidebar'
-import {getArticle} from './../service/getData'
+import {getLastestArticle} from './../service/getData'
 
 export default {
   data() {
@@ -29,12 +32,15 @@ export default {
     sidebar
   },
   created() {
-    this.getData(0)
+    this.getData()
   },
   methods: {
-    getData(page = 0) {
-      getArticle(page).then(obj => {
+    getData() {
+      getLastestArticle(this.page).then(obj => {
         obj.map(i => {
+          if (i.content.length > 200) {
+            i.content = i.content.replace(/<[^<>]+>/ig, '').substr(0, 200) + '...'
+          }
           this.articles.push(i)
         })
         this.page += 1

@@ -5,8 +5,7 @@
           <div class="article-head">
             {{ title }}
           </div>
-          <div class="article-content">
-            {{ content }}
+          <div class="article-content" v-html="content">
           </div>
         </div>
       </div>
@@ -16,6 +15,8 @@
 
 <script>
 import sidebar from './Sidebar'
+import {getArticle} from './../service/getData'
+
 export default {
   data() {
     return {
@@ -23,6 +24,12 @@ export default {
       content: '1111',
       side: false
     }
+  },
+  created() {
+    getArticle(this.$route.params.id).then(obj => {
+      this.title = obj.title
+      this.content = obj.content
+    })
   },
   components: {
     sidebar
