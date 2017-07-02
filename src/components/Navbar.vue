@@ -74,6 +74,36 @@ export default {
     //   background: url(/static/nav-item-bg.png);
     // }
   }
+
+  @media (max-width: 768px) {
+    position: relative;
+    left: 0;
+    right: 0;
+    top: 0;
+    min-height: 40px;
+    li {
+      position: relative;
+      width: 33%;
+      padding: 4px;
+      background: #d7d6d2;
+      .active {
+        background: #000;
+      }
+      a {
+        border-radius: 0;
+        color: #000;
+        background: #d7d6d2;
+        &:hover,&:focus {
+          border-radius: 0;
+          color: #d7d6d2;
+          background-size: cover;
+          background-position: center 50%;
+          background-repeat: no-repeat;
+          background: #000;
+        }
+      }
+    }
+  }
 }
 
 .title {

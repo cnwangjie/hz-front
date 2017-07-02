@@ -14,3 +14,5 @@ export const getLastestArticle = page => {
 export const getArticle = id => fetchData(`/api/article/${id}`)
 
 export const getNav = () => fetchData(`/api/nav`)
+
+export const getArticleContains = word => fetchData(`/api/article/search?word=${word}`)

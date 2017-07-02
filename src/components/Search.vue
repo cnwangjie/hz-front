@@ -1,6 +1,7 @@
 <template lang="html">
     <div class="row">
       <div class="col-sm-offset-1 col-sm-7">
+        <h1 style="color:gray" v-if="articles.length == 0">没有找到包含 {{ word }} 的文章</h1>
         <div v-for="article in articles" class="article-list">
           <router-link :to="`article/${article.id}`">
             <div class="head">
@@ -11,7 +12,6 @@
             {{ article.content }}
           </div>
         </div>
-        <button class="btn btn-lg center-block" style="background:#dddcd9" v-on:click="getData()">加载更多</button>
       </div>
       <sidebar></sidebar>
     </div>
@@ -19,31 +19,37 @@
 
 <script>
 import sidebar from './Sidebar'
-import {getLastestArticle} from './../service/getData'
+import {getArticleContains} from './../service/getData'
 
 export default {
   data() {
     return {
       articles: [],
       page: 0,
+      word: ''
     }
   },
   components: {
     sidebar
   },
+  watch: {
+    '$route': 'searchArticle'
+  },
   created() {
-    this.getData()
+    this.searchArticle()
   },
   methods: {
-    getData() {
-      getLastestArticle(this.page).then(obj => {
+    searchArticle() {
+      this.word = this.$route.query.word
+      let word = this.word
+      if (!word) return
+      getArticleContains(word).then(obj => {
         obj.map(i => {
           if (i.content.length > 200) {
             i.content = i.content.replace(/<[^<>]+>/ig, '').substr(0, 200) + '...'
           }
-          this.articles.push(i)
         })
-        this.page += 1
+        this.articles = obj
       })
     }
   }

@@ -3,7 +3,7 @@
       <div class="col-sm-offset-1" v-bind:class="side ? 'col-sm-7' : 'col-sm-10'">
         <div class="article">
           <div class="article-head">
-            {{ title }}
+            <h3>{{ title }}</h3>
           </div>
           <div class="article-content" v-html="content">
           </div>
@@ -45,20 +45,19 @@ export default {
   text-align: center;
   position: relative;
   top: 10px;
-  left: 38px;
-  width: 120px;
-  height: 20px;
-  line-height: 20px;
-  border: 1px solid #a00;
-  border-radius: 30px;
+  min-width: 60px;
+  height: 24px;
+  line-height: 24px;
   background: #d7d6d2;
-  padding: 0 8px;
+  padding: 0;
+  word-wrap: break-word;
   font-size: 14px;
   font-weight: 500;
 }
 .article-content {
-  border: 1px solid #000;
-  border-radius: 10px;
-  padding: 32px 40px 12px;
+  padding: 32px 5px 12px;
+}
+img {
+  max-width: 100%;
 }
 </style>
