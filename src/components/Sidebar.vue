@@ -5,32 +5,50 @@
     <div class="block-head">
       搜索
     </div>
-    <div class="block-content">
+    <div class="block-content form-inline">
       <input type="text" class="form-control" placeholder="要搜索的关键词" v-model="word"></input>
-      <router-link class="btn" style="background:#dddcd9" :to="'/search?word=' + word">搜索</router-link>
+      <router-link class="btn" style="background:#dddcd9" :to="word ? '/search?word=' + word : ''">搜索</router-link>
     </div>
-    <!-- <div class="block-head">
-      {{ block.title }}
+  </div>
+  <div class="block">
+    <div class="block-head">
+      推荐阅读
     </div>
-    <div class="block-content" v-html="block.content">
+    <div class="block-content form-inline">
+      <ul class="suggest-list">
+        <li v-for="article in suggest">
+          <router-link :to="`article/${article.id}`">{{ article.title }}</router-link>
+        </li>
+      </ul>
     </div>
-    <router-link :to="readmore" v-if="block.readmore" class="readmore">继续阅读</router-link> -->
   </div>
 </div>
 
 </template>
 
 <script>
+import {getRandomArticle} from './../service/getData'
 export default {
   data() {
     return {
-      word: ''
+      word: '',
+      suggest: []
+    }
+  },
+  created() {
+    this.getSuggestArticle()
+  },
+  methods: {
+    getSuggestArticle() {
+      getRandomArticle(5).then(obj => {
+        this.suggest = obj
+      })
     }
   }
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
 .block {
 }
 .block-head {
@@ -45,7 +63,6 @@ export default {
 .block-content {
   position: relative;
   padding: 12px 20px;
-  text-indent: 25px;
 }
 .readmore {
   cursor: pointer;
@@ -53,5 +70,22 @@ export default {
 }
 .readmore:hover {
   text-decoration: underline;
+}
+
+.suggest-list {
+  text-decoration: none;
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 4px;
+  }
+  a {
+    color: #000;
+
+    &:hover {
+      color: #a00;
+      text-decoration: underline;
+    }
+  }
 }
 </style>

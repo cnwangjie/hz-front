@@ -23,7 +23,7 @@ export default {
   created() {
     getNav().then(obj => {
       obj.map(i => {
-        i.active = this.$route.name === i.name
+        i.active = this.$route.name === i.name || this.$route.path === i.name
 
         this.navs.push(i)
       })

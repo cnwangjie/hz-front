@@ -16,3 +16,7 @@ export const getArticle = id => fetchData(`/api/article/${id}`)
 export const getNav = () => fetchData(`/api/nav`)
 
 export const getArticleContains = word => fetchData(`/api/article/search?word=${word}`)
+
+export const getCateArticle = cateid => fetchData(`/api/cate/${cateid}`)
+
+export const getRandomArticle = sum => fetchData(`/api/article/random?sum=${sum}`)

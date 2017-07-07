@@ -32,6 +32,7 @@ export default {
     sidebar
   },
   created() {
+    window.document.title = '首页 | 徽州文化服务云平台'
     this.getData()
   },
   methods: {

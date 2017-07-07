@@ -4,6 +4,7 @@ import Index from '@/components/Index'
 import Page from '@/components/Page'
 import Article from '@/components/Article'
 import Search from '@/components/Search'
+import Cate from '@/components/Cate'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/search',
       component: Search,
       name: 'search'
+    },
+    {
+      path: '/cate/:cate',
+      component: Cate,
+      name: 'cate'
     }
   ]
 })

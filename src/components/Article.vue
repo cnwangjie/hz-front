@@ -20,16 +20,30 @@ import {getArticle} from './../service/getData'
 export default {
   data() {
     return {
-      title: 'ttt',
-      content: '1111',
+      title: '',
+      content: '',
       side: false
     }
   },
+  watch: {
+    '$route': 'loadArticle'
+  },
   created() {
-    getArticle(this.$route.params.id).then(obj => {
-      this.title = obj.title
-      this.content = obj.content
-    })
+    window.document.title = `loading | 徽州文化服务云平台`
+    this.loadArticle()
+  },
+  methods: {
+    loadArticle() {
+      getArticle(this.$route.params.id).then(obj => {
+        if ('title' in obj) {
+          this.title = obj.title
+          this.content = obj.content
+          window.document.title = `${obj.title} | 徽州文化服务云平台`
+        } else {
+          this.$router.go(-1)
+        }
+      })
+    }
   },
   components: {
     sidebar

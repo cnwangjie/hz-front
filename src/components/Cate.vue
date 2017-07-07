@@ -1,7 +1,6 @@
 <template lang="html">
     <div class="row">
       <div class="col-sm-offset-1 col-sm-7">
-        <h1 style="color:gray" v-if="articles.length == 0">{{ msg }}</h1>
         <div v-for="article in articles" class="article-list">
           <router-link :to="`article/${article.id}`">
             <div class="head">
@@ -19,51 +18,34 @@
 
 <script>
 import sidebar from './Sidebar'
-import {getArticleContains} from './../service/getData'
-
+import {getCateArticle} from './../service/getData'
 export default {
   data() {
     return {
-      articles: [],
-      page: 0,
-      word: '',
-      msg: ''
+      articles: []
+    }
+  },
+  created() {
+    this.getArticle()
+  },
+  methods: {
+    getArticle() {
+      getCateArticle(this.$route.params.id).then(obj => {
+        if (obj.length === 0) {
+          this.$router.replace('/')
+        } else {
+          this.articles = obj
+        }
+      })
     }
   },
   components: {
     sidebar
-  },
-  watch: {
-    '$route': 'searchArticle'
-  },
-  created() {
-    this.searchArticle()
-  },
-  methods: {
-    searchArticle() {
-      this.word = this.$route.query.word
-      let word = this.word
-      if (!word) return
-      this.msg = '搜索中...'
-      getArticleContains(word).then(obj => {
-        if (obj.length && obj.length > 0) {
-          obj.map(i => {
-            if (i.content.length > 200) {
-              i.content = i.content.replace(/<[^<>]+>/ig, '').substr(0, 200) + '...'
-            }
-          })
-        } else {
-          this.msg = `没有找到包含"${this.word}"的文章`
-        }
-        window.document.title = `${this.word} 的搜索结果`
-        this.articles = obj
-      })
-    }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="css">
 .article-list {
   margin-bottom: 50px;
   padding-bottom: 50px;
