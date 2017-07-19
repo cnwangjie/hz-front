@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/components/Index'
-import Page from '@/components/Page'
-import Article from '@/components/Article'
-import Search from '@/components/Search'
-import Cate from '@/components/Cate'
+import Index from '@/page/Index'
+import Page from '@/page/Page'
+import Article from '@/page/Article'
+import Search from '@/page/Search'
+import Cate from '@/page/Cate'
+import Admin from '@/page/admin/Index'
+import ArticleAdmin from '@/page/admin/ArticleAdmin'
 
 Vue.use(Router)
 
@@ -34,6 +36,16 @@ export default new Router({
       path: '/cate/:cate',
       component: Cate,
       name: 'cate'
+    },
+    {
+      path: '/admin',
+      component: Admin,
+      children: [
+        {
+          path: 'article',
+          component: ArticleAdmin
+        }
+      ]
     }
   ]
 })

@@ -1,4 +1,7 @@
 <template lang="html">
+<div>
+  <navbar></navbar>
+  <div class="container main">
     <div class="row">
       <div class="col-sm-offset-1 col-sm-7">
         <div v-for="article in articles" class="article-list">
@@ -11,47 +14,58 @@
             {{ article.content }}
           </div>
         </div>
-        <button class="btn btn-lg center-block" style="background:#dddcd9" v-on:click="getData()">加载更多</button>
       </div>
       <sidebar></sidebar>
     </div>
+  </div>
+  <foot></foot>
+</div>
 </template>
 
 <script>
-import sidebar from './Sidebar'
-import {getLastestArticle} from './../service/getData'
-
+import sidebar from './../components/Sidebar'
+import navbar from './../components/Navbar'
+import foot from './../components/Foot'
+import {getCateArticle} from './../service/getData'
 export default {
   data() {
     return {
-      articles: [],
-      page: 0,
+      articles: []
+    }
+  },
+  created() {
+    this.getArticle()
+  },
+  methods: {
+    getArticle() {
+      getCateArticle(this.$route.params.id).then(obj => {
+        if (obj.length === 0) {
+          this.$router.replace('/')
+        } else {
+          this.articles = obj
+        }
+      })
     }
   },
   components: {
-    sidebar
-  },
-  created() {
-    window.document.title = '首页 | 徽州文化服务云平台'
-    this.getData()
-  },
-  methods: {
-    getData() {
-      getLastestArticle(this.page).then(obj => {
-        obj.map(i => {
-          if (i.content.length > 200) {
-            i.content = i.content.replace(/<[^<>]+>/ig, '').substr(0, 200) + '...'
-          }
-          this.articles.push(i)
-        })
-        this.page += 1
-      })
-    }
+    sidebar,
+    navbar,
+    foot
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="css">
+
+body {
+  font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+  background: #d7d6d2;
+}
+
+.main {
+  margin-top: 40px;
+}
+
 .article-list {
   margin-bottom: 50px;
   padding-bottom: 50px;

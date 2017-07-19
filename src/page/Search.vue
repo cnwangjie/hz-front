@@ -1,4 +1,7 @@
 <template lang="html">
+<div>
+  <navbar></navbar>
+  <div class="container main">
     <div class="row">
       <div class="col-sm-offset-1 col-sm-7">
         <h1 style="color:gray" v-if="articles.length == 0">{{ msg }}</h1>
@@ -15,10 +18,15 @@
       </div>
       <sidebar></sidebar>
     </div>
+  </div>
+  <foot></foot>
+</div>
 </template>
 
 <script>
-import sidebar from './Sidebar'
+import sidebar from './../components/Sidebar'
+import navbar from './../components/Navbar'
+import foot from './../components/Foot'
 import {getArticleContains} from './../service/getData'
 
 export default {
@@ -31,7 +39,9 @@ export default {
     }
   },
   components: {
-    sidebar
+    sidebar,
+    navbar,
+    foot
   },
   watch: {
     '$route': 'searchArticle'
@@ -64,6 +74,16 @@ export default {
 </script>
 
 <style lang="scss">
+
+body {
+  font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
+  background: #d7d6d2;
+}
+
+.main {
+  margin-top: 40px;
+}
+
 .article-list {
   margin-bottom: 50px;
   padding-bottom: 50px;
