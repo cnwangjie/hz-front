@@ -11,7 +11,7 @@
   </div>
   <a v-on:click="newArticle()" class="btn btn-primary">添加文章</a>
   <h2 class="sub-header">管理</h2>
-  <input type="text" class="form-control" placeholder="搜索" v-model="searchword" v-on:change="search()"></input>
+  <input type="text" class="form-control" placeholder="搜索" v-model="searchword"></input>
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -45,7 +45,6 @@
               @blur="onEditorBlur($event)"
               @focus="onEditorFocus($event)"
               @ready="onEditorReady($event)">></quill-editor>
-          <button class="btn" v-on:click>保存</button>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -82,6 +81,9 @@ export default {
       articles: [],
     }
   },
+  watch: {
+    'searchword': 'search'
+  },
   components: {
     quillEditor
   },
@@ -90,8 +92,6 @@ export default {
       this.articles = obj
       this.articlesum = obj.length
     })
-  },
-  watch: {
   },
   methods: {
     removeArticle(id) {
@@ -116,7 +116,11 @@ export default {
     savechange() {
       if (!this.moding.id) {
         addArticle(this.moding).then(obj => {
-          this.articles.push(obj)
+          if ('error' in obj) {
+
+          } else {
+            this.articles.push(obj)
+          }
         })
       } else {
         editArticle(this.moding.id, this.moding).then(obj => {
@@ -127,8 +131,9 @@ export default {
     },
     search() {
       const wd = this.searchword
+      console.log(wd)
       this.articles.map(i => {
-        if (i.id.indexOf(wd) !== -1 || i.title.indexOf(wd) !== -1) {
+        if (i.id.toString().indexOf(wd) !== -1 || i.title.indexOf(wd) !== -1) {
           i.hide = false
         } else {
           i.hide = true

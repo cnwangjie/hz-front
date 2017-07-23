@@ -1,5 +1,5 @@
 <template lang="html">
-<div>
+<div class="admin-body">
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -32,7 +32,7 @@
         </div>
 
 
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2" style="padding:20px">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 admin-main">
 
           <router-view></router-view>
 
@@ -90,6 +90,11 @@ export default {
   created() {
     this.token = localStorage.getItem('admin-token')
   },
+  mounted() {
+    if (!this.token) {
+      $('#loginform').modal('show')
+    }
+  },
   updated() {
     if (!this.token) {
       $('#loginform').modal('show')
@@ -117,7 +122,7 @@ export default {
  */
 
 /* Move down content because we have a fixed navbar that is 50px tall */
-body {
+.admin-body {
   padding-top: 50px;
 }
 
@@ -185,16 +190,16 @@ body {
  * Main content
  */
 
-.main {
+.admin-main {
   padding: 20px;
 }
 @media (min-width: 768px) {
-  .main {
+  .admin-main {
     padding-right: 40px;
     padding-left: 40px;
   }
 }
-.main .page-header {
+.admin-main .page-header {
   margin-top: 0;
 }
 
