@@ -89,7 +89,6 @@ export default {
   },
   created() {
     getAllArticle().then(obj => {
-      console.log(obj)
       if (obj instanceof Array) {
         this.articles = obj
         this.articlesum = obj.length

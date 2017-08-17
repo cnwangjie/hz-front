@@ -4,16 +4,26 @@ const fetchData = (url = '', method = 'GET', data = {}) => {
   const headers = new Headers
   const token = localStorage.getItem('admin-token')
   if (token) headers.append('Authorization', token)
-  let body = ''
-  for (let key in data) {
-    body += key + '=' + data[key] + '&'
-  }
-  body = body.substr(0, body.lastIndexOf('&'))
-  return fetch(encodeURI(apiurl + url + '?' + body), {
+
+  const option = {
     headers,
     method,
     mode: 'cors'
-  }).then(data => data.json())
+  }
+
+  let requestBody = Object.keys(data).map(key => {
+    if (typeof data[key] == 'string')
+      return key + '=' + encodeURIComponent(data[key])
+  }).filter(i => i).join('&')
+
+  if (method === 'POST') {
+    headers.append('Content-Type', 'application/x-www-form-urlencoded')
+    option.body = requestBody
+  } else {
+    url += '?' + requestBody
+  }
+
+  return fetch(encodeURI(apiurl + url), option).then(data => data.json())
   .then(json => {
     if ('error' in json && json.error === 'Unauthorized') {
       localStorage.removeItem('admin-token')
