@@ -9,7 +9,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">管理页</a>
+          <router-link class="navbar-brand" :to="'admin'">管理页</router-link>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -89,6 +89,7 @@ export default {
   },
   created() {
     this.token = localStorage.getItem('admin-token')
+    this.$router.replace('/admin/article')
   },
   mounted() {
     if (!this.token) {
@@ -124,6 +125,7 @@ export default {
 /* Move down content because we have a fixed navbar that is 50px tall */
 .admin-body {
   padding-top: 50px;
+  background: #fff;
 }
 
 

@@ -22,8 +22,8 @@ const fetchData = (url = '', method = 'GET', data = {}) => {
   })
 }
 
-export const getLastestArticle = page => {
-  return fetchData(`/api/article/lastest`, 'GET', {page})
+export const getLastestArticle = ({page, size = 10}) => {
+  return fetchData(`/api/article/lastest`, 'GET', {page, size})
 }
 
 export const getArticle = id => fetchData(`/api/article/${id}`)
@@ -47,3 +47,5 @@ export const getAllArticle = () => fetchData(`/api/article/all`)
 export const addArticle = (obj) => fetchData(`/api/article/add`, 'POST', obj)
 
 export const editArticle = (id, obj) => fetchData(`/api/article/${id}/edit`, 'POST', obj)
+
+export const getAllCates = () => fetchData(`/api/cate/all`)

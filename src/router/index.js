@@ -5,6 +5,7 @@ import Page from '@/page/Page'
 import Article from '@/page/Article'
 import Search from '@/page/Search'
 import Cate from '@/page/Cate'
+import Archive from '@/page/Archive'
 import Admin from '@/page/admin/Index'
 import ArticleAdmin from '@/page/admin/ArticleAdmin'
 
@@ -33,9 +34,14 @@ export default new Router({
       name: 'search'
     },
     {
-      path: '/cate/:cate',
+      path: '/cate/:cate_id',
       component: Cate,
       name: 'cate'
+    },
+    {
+      path: '/archive',
+      component: Archive,
+      name: 'archive'
     },
     {
       path: '/admin',

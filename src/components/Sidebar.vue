@@ -6,8 +6,8 @@
       搜索
     </div>
     <div class="block-content form-inline">
-      <input type="text" class="form-control" placeholder="要搜索的关键词" v-model="word"></input>
-      <router-link class="btn" style="background:#dddcd9" :to="word ? '/search?word=' + word : ''">搜索</router-link>
+        <input type="text" class="form-control" placeholder="要搜索的关键词" v-model="word" style="width: 70%"></input>
+        <button class="btn" style="background:#dddcd9" v-on:click="$router.push(word ? '/search?word=' + word : '')">搜索</button>
     </div>
   </div>
   <div class="block">

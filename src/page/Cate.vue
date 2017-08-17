@@ -4,7 +4,8 @@
   <div class="container main">
     <div class="row">
       <div class="col-sm-offset-1 col-sm-7">
-        <div v-for="article in articles" class="article-list">
+        <div class="cate-name">{{ cate }}</div>
+        <div v-for="article in articles" class="cate-article-list">
           <router-link :to="`article/${article.id}`">
             <div class="head">
               <strong>{{ article.title }}</strong>
@@ -26,24 +27,41 @@
 import sidebar from './../components/Sidebar'
 import navbar from './../components/Navbar'
 import foot from './../components/Foot'
-import {getCateArticle} from './../service/getData'
+import {getCateArticle, getAllCates} from './../service/getData'
 export default {
   data() {
     return {
-      articles: []
+      articles: [],
+      cate_id: this.$route.params.cate_id,
+      cate: '',
     }
   },
   created() {
     this.getArticle()
+    this.getThisCateName()
   },
   methods: {
     getArticle() {
-      getCateArticle(this.$route.params.id).then(obj => {
+      getCateArticle(this.cate_id).then(obj => {
         if (obj.length === 0) {
           this.$router.replace('/')
         } else {
-          this.articles = obj
+          obj.map(i => {
+            if (i.content.length > 200) {
+              i.content = i.content.replace(/<[^<>]+>/ig, '').substr(0, 200) + '...'
+            }
+            this.articles.push(i)
+          })
         }
+      })
+    },
+    getThisCateName() {
+      getAllCates().then(obj => {
+        obj.map(i => {
+          if (i.id == this.cate_id) {
+            this.cate = i.name
+          }
+        })
       })
     }
   },
@@ -66,9 +84,14 @@ body {
   margin-top: 40px;
 }
 
-.article-list {
-  margin-bottom: 50px;
-  padding-bottom: 50px;
+.cate-name {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.cate-article-list {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
   border-bottom: 1px solid rgba(180, 180, 180, 0.5);
   .date {
     color: #999;

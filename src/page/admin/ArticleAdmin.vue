@@ -89,8 +89,11 @@ export default {
   },
   created() {
     getAllArticle().then(obj => {
-      this.articles = obj
-      this.articlesum = obj.length
+      console.log(obj)
+      if (obj instanceof Array) {
+        this.articles = obj
+        this.articlesum = obj.length
+      }
     })
   },
   methods: {

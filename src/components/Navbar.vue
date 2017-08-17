@@ -124,6 +124,9 @@ export default {
   line-height: 290px;
   color: rgb(0, 0, 0);
   text-shadow: 0px 0px 6px white;
+  h1 {
+    font-size: 50px;
+  }
 }
 
 .site-name {

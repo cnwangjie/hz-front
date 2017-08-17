@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     getData() {
-      getLastestArticle(this.page).then(obj => {
+      getLastestArticle({page: this.page}).then(obj => {
         obj.map(i => {
           if (i.content.length > 200) {
             i.content = i.content.replace(/<[^<>]+>/ig, '').substr(0, 200) + '...'
