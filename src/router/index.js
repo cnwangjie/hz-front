@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Home from '@/page/Home'
+import Class from '@/page/Class'
+import ClassDetail from '@/components/ClassDetail'
 import Index from '@/page/Index'
 import Page from '@/page/Page'
 import Article from '@/page/Article'
@@ -15,8 +18,25 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Index,
+      component: Home,
       name: 'home'
+    },
+    {
+      path: '/class',
+      component: Class,
+      name: 'class',
+      children: [
+        {
+          path: ':name',
+          component: ClassDetail,
+          name: 'classDetail'
+        }
+      ]
+    },
+    {
+      path: '/info',
+      component: Index,
+      name: 'info'
     },
     {
       path: '/page/:pagename',

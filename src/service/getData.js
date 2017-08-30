@@ -12,7 +12,7 @@ const fetchData = (url = '', method = 'GET', data = {}) => {
   }
 
   let requestBody = Object.keys(data).map(key => {
-    if (typeof data[key] == 'string')
+    if (typeof data[key] === 'string')
       return key + '=' + encodeURIComponent(data[key])
   }).filter(i => i).join('&')
 
@@ -23,7 +23,7 @@ const fetchData = (url = '', method = 'GET', data = {}) => {
     url += '?' + requestBody
   }
 
-  return fetch(encodeURI(apiurl + url), option).then(data => data.json())
+  return fetch(apiurl + url, option).then(data => data.json())
   .then(json => {
     if ('error' in json && json.error === 'Unauthorized') {
       localStorage.removeItem('admin-token')
@@ -54,7 +54,7 @@ export const getToken = (username, password) => fetchData(`/auth/login`, 'POST',
 
 export const getAllArticle = () => fetchData(`/api/article/all`)
 
-export const addArticle = (obj) => fetchData(`/api/article/add`, 'POST', obj)
+export const addArticle = obj => fetchData(`/api/article/add`, 'POST', obj)
 
 export const editArticle = (id, obj) => fetchData(`/api/article/${id}/edit`, 'POST', obj)
 

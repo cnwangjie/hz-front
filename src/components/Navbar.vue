@@ -2,7 +2,8 @@
   <div class="header">
     <ul class="nav nav-pills hz-nav">
       <li v-for="nav in navs" role="presentation">
-        <router-link :to="nav.link" v-bind:class="nav.active ? 'active' : ''">{{ nav.title }}</router-link>
+        <router-link v-if="nav.link.indexOf('http') === -1" :to="nav.link" v-bind:class="nav.active ? 'active' : ''">{{ nav.title }}</router-link>
+        <a v-if="nav.link.indexOf('http') !== -1" v-bind:href="nav.link">{{ nav.title }}</a>
       </li>
     </ul>
     <div class="pic">
@@ -126,6 +127,11 @@ export default {
   text-shadow: 0px 0px 6px white;
   h1 {
     font-size: 50px;
+  }
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 40px;
+    }
   }
 }
 
