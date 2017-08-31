@@ -9,7 +9,7 @@
 
             <!-- Nav tabs -->
             <ul class="home-overview-btn" role="tablist">
-              <a v-for="item, index in overviews" v-bind:href="'#item' + index" v-bind:aria-controls="'item' + index" role="tab" data-toggle="tab"><li role="presentation">{{ item.name }}</li></a>
+              <a v-for="item, index in overviews" v-bind:href="'#item' + index" v-bind:aria-controls="'item' + index" role="tab" data-toggle="tab"><li v-bind:style="'background:url(/static/' + item.name + '.svg);background-position-x: center;background-position-y: 25%;background-repeat: no-repeat;background-size: 50%;'" role="presentation">{{ item.name }}</li></a>
             </ul>
 
             <!-- Tab panes -->
@@ -342,11 +342,17 @@ body {
     width: 100px;
     height: 100px;
     border-radius: 60px;
-    background: rgba(255, 255, 255, 0.5);
+    border: #d7d6d2 1px solid;
     margin: 20px;
-    line-height: 100px;
+    line-height: 160px;
     font-size: 20px;
     color: #000;
+  }
+  li:hover {
+    border: #fff 1px solid;
+  }
+  li:active {
+    border: #fff 1px solid;
   }
   @media (max-width: 768px) {
     li {

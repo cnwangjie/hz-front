@@ -136,7 +136,7 @@ export default {
 }
 
 .site-name {
-  line-height: 290px;
+  line-height: 400px;
 }
 
 </style>

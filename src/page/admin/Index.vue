@@ -9,7 +9,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <router-link class="navbar-brand" :to="'admin'">管理页</router-link>
+          <router-link class="navbar-brand" :to="'/admin'">管理页</router-link>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -108,6 +108,7 @@ export default {
           $('#loginform').modal('hide')
           localStorage.setItem('admin-token', obj.token)
           this.token = obj.token
+          this.$forceUpdate()
         } else {
           this.loginerror = true
         }

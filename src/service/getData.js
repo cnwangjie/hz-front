@@ -12,8 +12,7 @@ const fetchData = (url = '', method = 'GET', data = {}) => {
   }
 
   let requestBody = Object.keys(data).map(key => {
-    if (typeof data[key] === 'string')
-      return key + '=' + encodeURIComponent(data[key])
+    return key + '=' + encodeURIComponent(data[key])
   }).filter(i => i).join('&')
 
   if (method === 'POST') {

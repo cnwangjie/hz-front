@@ -8,6 +8,7 @@
 
         <div v-show="!active" v-for="item, index in classes" class="col-xs-6 col-md-3 class-item">
           <router-link :to="'/class/' + item.title" class="thumbnail">
+            <div v-bind:style="'display:block;width:100%;height:140px;background:url(/static/' + item.title + '.jpg);background-position:top;background-repeat:no-repeat;background-size:cover'"></div>
             <h3>{{ item.title }}</h3>
           </router-link>
         </div>
@@ -76,7 +77,7 @@ body {
     height: 200px;
     color: black;
     h3 {
-      padding: 20px;
+      padding: 0 10px;
     }
   }
 
