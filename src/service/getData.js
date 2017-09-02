@@ -1,4 +1,4 @@
-const apiurl = 'http://127.0.0.1:2002'
+import {apiurl} from './config'
 
 const fetchData = (url = '', method = 'GET', data = {}) => {
   const headers = new Headers
@@ -58,3 +58,37 @@ export const addArticle = obj => fetchData(`/api/article/add`, 'POST', obj)
 export const editArticle = (id, obj) => fetchData(`/api/article/${id}/edit`, 'POST', obj)
 
 export const getAllCates = () => fetchData(`/api/cate/all`)
+
+export const getResources = path => fetchData(`/api/resource/list`, 'GET', {path})
+
+export const mkdir = (path, name) => fetchData(`/api/resource/mkdir`, 'POST', {path, name})
+
+export const uploadFile = ({path, files, progressHandler}) => {
+  return new Promise((resolve, reject) => {
+    const formData = new FormData
+    formData.append('path', path)
+    formData.append('file', files[0])
+
+    const xhr = new XMLHttpRequest
+    const token = localStorage.getItem('admin-token')
+    if (!token) {
+      reject('no token')
+    }
+    xhr.open('POST', `${apiurl}/api/resource/upload`, true)
+    xhr.setRequestHeader('Authorization', token)
+    xhr.upload.addEventListener('progress', result => {
+      if (result.lengthComputable) {
+        progressHandler(result.loaded / result.total * 100 << 0)
+      }
+    }, false)
+
+    xhr.addEventListener('readystatechange', () => {
+      if (xhr.readyState === 4) {
+        const json = JSON.parse(xhr.responseText)
+        resolve(json)
+      }
+    })
+
+    xhr.send(formData)
+  })
+}

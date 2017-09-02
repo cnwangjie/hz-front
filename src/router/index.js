@@ -11,6 +11,7 @@ import Cate from '@/page/Cate'
 import Archive from '@/page/Archive'
 import Admin from '@/page/admin/Index'
 import ArticleAdmin from '@/page/admin/ArticleAdmin'
+import ResourceAdmin from '@/page/admin/ResourceAdmin'
 
 Vue.use(Router)
 
@@ -70,6 +71,10 @@ export default new Router({
         {
           path: 'article',
           component: ArticleAdmin
+        },
+        {
+          path: 'resource',
+          component: ResourceAdmin
         }
       ]
     }

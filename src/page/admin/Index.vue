@@ -23,7 +23,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li v-for="nav in navs" class="active">
+            <li v-for="nav in navs" :class="$route.path === nav.link ? 'active' : ''">
               <router-link :to="nav.link">
                 {{ nav.name }} <span v-if="false" class="sr-only">(current)</span>
               </router-link>
@@ -83,6 +83,10 @@ export default {
         {
           name: '文章管理',
           link: '/admin/article'
+        },
+        {
+          name: '资源管理',
+          link: '/admin/resource'
         }
       ]
     }
@@ -90,11 +94,6 @@ export default {
   created() {
     this.token = localStorage.getItem('admin-token')
     this.$router.replace('/admin/article')
-  },
-  mounted() {
-    if (!this.token) {
-      $('#loginform').modal('show')
-    }
   },
   updated() {
     if (!this.token) {

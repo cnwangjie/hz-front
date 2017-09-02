@@ -42,9 +42,7 @@
           <input type="text" class="form-control" placeholder="作者" v-model="moding.author"></input>
           <quill-editor ref="myTextEditor"
               v-model="moding.content"
-              @blur="onEditorBlur($event)"
-              @focus="onEditorFocus($event)"
-              @ready="onEditorReady($event)">></quill-editor>
+              :options="editorOption"></quill-editor>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -75,6 +73,35 @@ export default {
         title: '',
         author: '',
         content: '',
+      },
+      editorOption: {
+        modules: {
+          toolbar: {
+            container: [
+              ['bold', 'italic', 'underline', 'strike'],
+              ['blockquote', 'code-block'],
+              [{ 'header': 1 }, { 'header': 2 }],
+              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+              [{ 'script': 'sub'}, { 'script': 'super' }],
+              [{ 'indent': '-1'}, { 'indent': '+1' }],
+              [{ 'direction': 'rtl' }],
+              [{ 'size': ['small', false, 'large', 'huge'] }],
+              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+              [{ 'color': [] }, { 'background': [] }],
+              [{ 'font': [] }],
+              [{ 'align': [] }],
+              ['clean'],
+              ['link', 'image', 'video']
+            ],
+            handlers: {
+              'image': function() {
+                const range = this.quill.getSelection()
+                const value = prompt('What is the image URL')
+                this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER)
+              }
+            }
+         }
+        }
       },
       searchword: '',
       articlesum: 0,
