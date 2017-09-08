@@ -90,7 +90,7 @@ body {
     left: 20px;
     width: 100%;
     min-height: 20px;
-    line-height: 20px;
+    line-height: 24px;
     background: #d7d6d2;
     padding: 0 8px;
     font-size: 23px;
@@ -105,6 +105,17 @@ body {
   .content {
     text-indent: 25px;
     padding: 20px 40px 0;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    .head {
+      left: 0;
+      padding: 0;
+    }
+    .content {
+      padding: 20px 0 0;
+    }
   }
 }
 

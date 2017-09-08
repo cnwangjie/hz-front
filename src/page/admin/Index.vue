@@ -3,18 +3,20 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button> -->
           <router-link class="navbar-brand" :to="'/admin'">管理页</router-link>
         </div>
+        <!--
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
           </ul>
         </div>
+        -->
       </div>
     </nav>
 
@@ -33,9 +35,9 @@
 
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 admin-main">
-
-          <router-view></router-view>
-
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
         </div>
 
       </div>
@@ -46,7 +48,7 @@
         <div class="modal-content">
           <div v-if="loginerror" class="alert alert-warning alert-dismissible fade in" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            Login Error
+            {{ loginerror.msg }}
           </div>
           <div class="modal-header">
             <h4 class="modal-title" id="myModalLabel">Login</h4>
@@ -70,7 +72,7 @@
 </template>
 
 <script>
-import {getAllArticle, getToken} from './../../service/getData'
+import {getAllArticle, getToken, authValid} from './../../service/getData'
 
 export default {
   data() {
@@ -92,24 +94,37 @@ export default {
     }
   },
   created() {
-    this.token = localStorage.getItem('admin-token')
-    this.$router.replace('/admin/article')
   },
   updated() {
-    if (!this.token) {
-      $('#loginform').modal('show')
-    }
+    this.authTest()
   },
   methods: {
+    authTest() {
+      const token = localStorage.getItem('admin-token')
+      if (!token) {
+        $('#loginform').modal('show')
+      } else if (!this.token) {
+        authValid().then(valid => {
+          if (!valid) {
+            console.log(valid)
+            localStorage.removeItem('admin-token')
+            $('#loginform').modal('show')
+          } else {
+            this.token = localStorage.getItem('admin-token')
+            $('#loginform').modal('hide')
+          }
+        })
+      }
+    },
     login() {
       getToken(this.username, this.password).then(obj => {
         if (obj.status === 'success') {
           $('#loginform').modal('hide')
           localStorage.setItem('admin-token', obj.token)
-          this.token = obj.token
+          this.loginerror = false
           this.$forceUpdate()
         } else {
-          this.loginerror = true
+          this.loginerror = obj
         }
       })
     }

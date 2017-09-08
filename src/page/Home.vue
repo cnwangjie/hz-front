@@ -9,7 +9,7 @@
 
             <!-- Nav tabs -->
             <ul class="home-overview-btn" role="tablist">
-              <a v-for="item, index in overviews" v-bind:href="'#item' + index" v-bind:aria-controls="'item' + index" role="tab" data-toggle="tab"><li v-bind:style="'background:url(/static/' + item.name + '.svg);background-position-x: center;background-position-y: 25%;background-repeat: no-repeat;background-size: 50%;'" role="presentation">{{ item.name }}</li></a>
+              <a v-for="item, index in overviews" v-bind:href="'#item' + index" v-bind:aria-controls="'item' + index" role="tab" data-toggle="tab"><li v-bind:style="'background:url(/static/' + item.name + '.svg);background-position-x: center;background-position-y: 25%;background-repeat: no-repeat;background-size: 50%;'" role="presentation"><span>{{ item.name }}</span></li></a>
             </ul>
 
             <!-- Tab panes -->
@@ -339,14 +339,18 @@ body {
   padding-left: 0;
   li {
     display: inline-block;
-    width: 100px;
-    height: 100px;
+    width: 10%;
+    height: 0;
+    padding-bottom: 10%;
     border-radius: 60px;
     border: #d7d6d2 1px solid;
     margin: 20px;
-    line-height: 160px;
     font-size: 20px;
     color: #000;
+    span {
+      display: block;
+      margin-top: 65%;
+    }
   }
   li:hover {
     border: #fff 1px solid;
@@ -355,11 +359,15 @@ body {
     border: #fff 1px solid;
   }
   @media (max-width: 768px) {
+    height: auto;
     li {
-      width: 50px;
-      height: 50px;
-      line-height: 50px;
       margin: 5px;
+      font-size: 16px;
+    }
+  }
+  @media (max-width: 320px) {
+    li {
+      font-size: 10px;
     }
   }
 }

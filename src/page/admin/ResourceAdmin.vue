@@ -27,8 +27,8 @@
           <td>{{ new Date(f.modified).toLocaleString() }}</td>
           <td>
             <a v-on:click="copyLink(f.path)" class="btn btn-sm btn-info" v-if="!f.isdir">复制链接</a>
+            <a v-on:click="changePath(f.path)" class="btn btn-sm btn-primary" v-else>进入目录</a>
             <a v-on:click="remove(f.path)" class="btn btn-sm btn-danger" v-if="false">删除</a>
-            <a v-on:click="changePath(f.path)" class="btn btn-sm btn-primary" v-if="f.isdir">进入目录</a>
           </td>
         </tr>
       </tbody>
@@ -181,7 +181,7 @@ export default {
       })
     },
     copyLink(path) {
-      prompt('', apiurl + '/resource/' + path)
+      prompt('请使用ctrl+c复制', apiurl + '/resource/' + path)
     }
   }
 }

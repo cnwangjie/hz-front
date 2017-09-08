@@ -1,14 +1,37 @@
 <template lang="html">
   <div class="header">
-    <ul class="nav nav-pills hz-nav">
+    <ul class="nav nav-pills hz-nav hidden-xs">
       <li v-for="nav in navs" role="presentation">
         <router-link v-if="nav.link.indexOf('http') === -1" :to="nav.link" v-bind:class="nav.active ? 'active' : ''">{{ nav.title }}</router-link>
-        <a v-if="nav.link.indexOf('http') !== -1" v-bind:href="nav.link">{{ nav.title }}</a>
+        <a v-else v-bind:href="nav.link">{{ nav.title }}</a>
       </li>
     </ul>
-    <div class="pic">
+    <div class="pic hidden-xs">
       <h1 class="site-name">徽州文化服务云平台</h1>
     </div>
+
+    <nav class="navbar navbar-inverse navbar-static-top visible-xs">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">徽州文化服务云平台</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li v-for="nav in navs" :class="nav.active ? 'active' : ''">
+              <router-link v-if="nav.link.indexOf('http') === -1" :to="nav.link">{{ nav.title }}</router-link>
+              <a v-else v-bind:href="nav.link">{{ nav.title }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
   </div>
 </template>
 
@@ -36,13 +59,13 @@ export default {
 <style lang="scss">
 .header {
   text-align: center;
-  margin-top: 10px;
   max-width: 980px;
   margin-left: auto;
   margin-right: auto;
 }
 .hz-nav {
   position: relative;
+  margin-top: 10px;
   li {
     width: 114px;
     border-radius: 0;
@@ -84,7 +107,7 @@ export default {
     min-height: 40px;
     li {
       position: relative;
-      width: 33%;
+      width: 32%;
       padding: 4px;
       background: #d7d6d2;
       .active {
