@@ -3,20 +3,21 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button> -->
+          </button>
           <router-link class="navbar-brand" :to="'/admin'">管理页</router-link>
         </div>
-        <!--
+
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
+            <li v-if="token"><a style="cursor: pointer;" v-on:click="logout()">登出</a></li>
           </ul>
         </div>
-        -->
+
       </div>
     </nav>
 
@@ -53,7 +54,7 @@
           <div class="modal-header">
             <h4 class="modal-title" id="myModalLabel">Login</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" v-on:keydown.enter="login()">
             <div class="form-group">
               <label>Username</label>
               <input v-model="username" type="text" class="form-control" classplaceholder="username">
@@ -87,9 +88,17 @@ export default {
           link: '/admin/article'
         },
         {
-          name: '资源管理',
-          link: '/admin/resource'
-        }
+          name: '图片管理',
+          link: '/admin/resource/photo'
+        },
+        {
+          name: '视频管理',
+          link: '/admin/resource/video'
+        },
+        {
+          name: '动漫管理',
+          link: '/admin/resource/anime'
+        },
       ]
     }
   },
@@ -122,11 +131,16 @@ export default {
           $('#loginform').modal('hide')
           localStorage.setItem('admin-token', obj.token)
           this.loginerror = false
-          this.$forceUpdate()
+          location.reload()
         } else {
           this.loginerror = obj
         }
       })
+    },
+    logout() {
+      localStorage.removeItem('admin-token')
+      this.token = ''
+      location.reload()
     }
   }
 }

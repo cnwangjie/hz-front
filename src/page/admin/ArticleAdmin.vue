@@ -1,15 +1,17 @@
 <template lang="html">
 <div>
   <h1 class="page-header">文章管理</h1>
-  <div class="row placeholders">
+  <!-- <div class="row placeholders">
     <div class="col-xs-6 col-sm-3 placeholder">
       <div class="squre-block" style="background: lightgreen">
         <h4>文章总数</h4>
         <span class="text-muted">{{ articlesum }}</span>
       </div>
     </div>
-  </div>
+  </div> -->
+  <a v-on:click="getArticleList()" class="btn btn-primary">更新文章列表</a>
   <a v-on:click="newArticle()" class="btn btn-primary">添加文章</a>
+  <span>共有 <b>{{ articlesum }}</b> 篇文章</span>
   <h2 class="sub-header">管理</h2>
   <input type="text" class="form-control" placeholder="搜索" v-model="searchword"></input>
   <div class="table-responsive">
@@ -18,6 +20,7 @@
         <tr>
           <th>#</th>
           <th>标题</th>
+          <th>分类</th>
           <th>操作</th>
         </tr>
       </thead>
@@ -25,8 +28,9 @@
         <tr v-for="a in articles" v-if="!a.hide">
           <td>{{ a.id }}</td>
           <td>{{ a.title }}</td>
+          <td>{{ a.cates.map(i => cates[i].name).join(',') }}</td>
           <td>
-            <a v-on:click="modifyAritcle(a.id)" class="btn btn-sm btn-warning">修改</a>
+            <a v-on:click="modifyAritcle(a.id)" class="btn btn-sm btn-warning">编辑</a>
             <a v-on:click="removeArticle(a.id)" class="btn btn-sm btn-danger">删除</a>
           </td>
         </tr>
@@ -42,11 +46,26 @@
           <h4 class="modal-title" id="myModalLabel">编辑文章</h4>
         </div>
         <div class="modal-body">
-          <input type="text" class="form-control" placeholder="标题" v-model="moding.title"></input>
-          <input type="text" class="form-control" placeholder="作者" v-model="moding.author"></input>
-          <quill-editor ref="myTextEditor"
-              v-model="moding.content"
-              :options="editorOption"></quill-editor>
+          <div class="form-group">
+            <label for="">标题</label>
+            <input type="text" class="form-control" placeholder="标题" v-model="moding.title"></input>
+          </div>
+          <div class="form-group">
+            <label for="">作者</label>
+            <input type="text" class="form-control" placeholder="作者" v-model="moding.author"></input>
+          </div>
+          <div class="form-group">
+            <label for="">分类</label>
+            <select multiple class="form-control" v-model="moding.cates">
+              <option v-for="cate in cates" v-bind:value="cate.id" :selected="moding.cates.indexOf(cate.id) !== -1">{{ cate.name }}</option>
+            </select>
+          </div>
+          <div class="">
+            <label for="">内容</label>
+            <quill-editor ref="myTextEditor"
+            v-model="moding.content"
+            :options="editorOption"></quill-editor>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -66,7 +85,8 @@ import {
   deleteArticle,
   getArticle,
   addArticle,
-  editArticle
+  editArticle,
+  getAllCates,
 } from './../../service/getData'
 
 export default {
@@ -77,6 +97,7 @@ export default {
         title: '',
         author: '',
         content: '',
+        cates: [],
       },
       editorOption: {
         modules: {
@@ -101,7 +122,8 @@ export default {
               'image': function() {
                 const range = this.quill.getSelection()
                 const value = prompt('What is the image URL')
-                this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER)
+                if (value)
+                  this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER)
               }
             }
          }
@@ -110,6 +132,8 @@ export default {
       searchword: '',
       articlesum: 0,
       articles: [],
+      lastUpdate: 0,
+      cates: {},
     }
   },
   watch: {
@@ -119,14 +143,30 @@ export default {
     quillEditor
   },
   created() {
-    getAllArticle().then(obj => {
-      if (obj instanceof Array) {
-        this.articles = obj
-        this.articlesum = obj.length
+    getAllCates().then(obj => {
+      if (Array.isArray(obj)) {
+        obj.map(i => {
+          this.cates[i.id] = i
+        })
       }
     })
+    this.getArticleList()
+  },
+  actived() {
+    if (Date.now() - this.lastUpdate > 60 * 1E3) {
+      this.getArticleList()
+    }
   },
   methods: {
+    getArticleList() {
+      getAllArticle().then(obj => {
+        if (Array.isArray(obj)) {
+          this.articles = obj
+          this.articlesum = obj.length
+          this.lastUpdate = Date.now()
+        }
+      })
+    },
     removeArticle(id) {
       deleteArticle(id)
       this.articles = this.articles.filter(i => i.id != id)
@@ -138,17 +178,24 @@ export default {
         title: '',
         author: '',
         content: '',
+        cates: [],
       }
     },
     modifyAritcle(id) {
       getArticle(id).then(obj => {
+        if (obj.author === 'null' || obj.author === null) {
+          obj.author = ''
+        }
+        obj.cates = obj.cates.map(i => i.id)
         this.moding = obj
         $('#modarticle').modal('show')
       })
     },
     savechange() {
+      const params = Object.assign({}, this.moding)
+      params.cates = params.cates.map(i => i + '').join(',')
       if (!this.moding.id) {
-        addArticle(this.moding).then(obj => {
+        addArticle(params).then(obj => {
           if ('error' in obj) {
 
           } else {
@@ -156,17 +203,29 @@ export default {
           }
         })
       } else {
-        editArticle(this.moding.id, this.moding).then(obj => {
-          this.articles.map(i => i.id == this.moding.id ? obj : i)
+        editArticle(this.moding.id, params).then(obj => {
+          if ('error' in obj) {
+
+          } else {
+            this.articles = this.articles.map(i => {
+              if (i.id === this.moding.id) {
+                return this.moding
+              } else {
+                return i
+              }
+            })
+          }
         })
       }
       $('#modarticle').modal('hide')
     },
     search() {
       const wd = this.searchword
-      console.log(wd)
       this.articles.map(i => {
-        if (i.id.toString().indexOf(wd) !== -1 || i.title.indexOf(wd) !== -1) {
+        const matched = i.id.toString().indexOf(wd) !== -1
+          || i.title.indexOf(wd) !== -1
+          || i.cates.map(j => this.cates[j].name).join(',').indexOf(wd) !== -1
+        if (matched) {
           i.hide = false
         } else {
           i.hide = true

@@ -116,10 +116,14 @@ export default {
   },
   watch: {
     'searchword': 'search',
-    'curpath': 'resolvePaths'
+    'curpath': 'resolvePaths',
   },
   created() {
-    this.changePath('/')
+    if (this.$route.params.path)
+      this.changePath(this.$route.params.path)
+    else {
+      this.changePath('/')
+    }
   },
   methods: {
     resolvePaths() {
@@ -136,6 +140,7 @@ export default {
     },
     changePath(path) {
       this.curpath = path
+      this.$router.replace(`/admin/resource/${path[0] === '/' ? path.substr(1) : path}`)
       getResources(path).then(obj => {
         if (obj instanceof Array) {
           this.files = obj

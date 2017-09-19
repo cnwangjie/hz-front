@@ -73,7 +73,7 @@ export default new Router({
           component: ArticleAdmin
         },
         {
-          path: 'resource',
+          path: 'resource/:path*',
           component: ResourceAdmin
         }
       ]

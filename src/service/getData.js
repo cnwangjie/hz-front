@@ -22,13 +22,21 @@ const fetchData = (url = '', method = 'GET', data = {}) => {
     url += '?' + requestBody
   }
 
-  return fetch(apiurl + url, option).then(data => data.json())
-  .then(json => {
-    if ('error' in json && json.error === 'Unauthorized') {
-      localStorage.removeItem('admin-token')
-    }
-    return json
-  })
+  return fetch(apiurl + url, option)
+    .then(data => data.json())
+    .then(json => {
+      if ('error' in json && json.error === 'Unauthorized') {
+        localStorage.removeItem('admin-token')
+      }
+      return json
+    })
+    .catch(err => {
+      return {
+        status: 'error',
+        error: 'response_error',
+        msg: 'Internal Server Error',
+      }
+    })
 }
 
 export const getLastestArticle = ({page, size = 10}) => {
