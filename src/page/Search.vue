@@ -1,6 +1,9 @@
 <template lang="html">
 <div>
   <navbar></navbar>
+
+  <blank></blank>
+
   <div class="container main">
     <div class="row">
       <div class="col-sm-offset-1 col-sm-7">
@@ -26,6 +29,7 @@
 <script>
 import sidebar from './../components/Sidebar'
 import navbar from './../components/Navbar'
+import blank from './../components/Blank'
 import foot from './../components/Foot'
 import {getArticleContains} from './../service/getData'
 
@@ -41,7 +45,8 @@ export default {
   components: {
     sidebar,
     navbar,
-    foot
+    foot,
+    blank,
   },
   watch: {
     '$route': 'searchArticle'
@@ -75,15 +80,6 @@ export default {
 
 <style lang="scss">
 
-body {
-  font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
-  background: #d7d6d2;
-}
-
-.main {
-  margin-top: 40px;
-}
-
 .article-list {
   margin-bottom: 50px;
   padding-bottom: 50px;
@@ -100,16 +96,27 @@ body {
     left: 20px;
     width: 100%;
     min-height: 20px;
-    line-height: 20px;
-    background: #d7d6d2;
+    line-height: 24px;
     padding: 0 8px;
     font-size: 23px;
     font-weight: 500;
     transition: .2s;
     cursor: pointer;
+    color: black;
     &:hover {
       transition: .2s;
       color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    .head {
+      left: 0;
+      padding: 0;
+    }
+    .content {
+      padding: 20px 0 0;
     }
   }
   .content {

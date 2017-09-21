@@ -1,5 +1,26 @@
 <template lang="html">
-  <div class="header">
+
+  <nav class="header-nav" role="navigation">
+		<div class="nav-container">
+
+			<div class="row">
+        <div class="col-sm-4 text-left">
+          <span class="title">徽州文化服务云平台</span>
+        </div>
+				<div class="col-sm-8 text-right">
+					<ul>
+            <li v-for="nav in navs" v-bind:class="nav.active ? 'active' : ''">
+              <router-link v-if="nav.link.indexOf('http') === -1" :to="nav.link" >{{ nav.title }}</router-link>
+              <a v-else v-bind:href="nav.link">{{ nav.title }}</a>
+            </li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</nav>
+
+  <!-- <div class="header">
     <ul class="nav nav-pills hz-nav hidden-xs">
       <li v-for="nav in navs" role="presentation">
         <router-link v-if="nav.link.indexOf('http') === -1" :to="nav.link" v-bind:class="nav.active ? 'active' : ''">{{ nav.title }}</router-link>
@@ -32,31 +53,103 @@
       </div>
     </nav>
 
-  </div>
+  </div> -->
 </template>
 
 <script>
 import {getNav} from './../service/getData'
+import {mapState, mapMutations} from 'vuex'
 
 export default {
   data() {
     return {
-      navs: []
     }
   },
+  computed: {
+    ...mapState(['navs'])
+  },
   created() {
-    getNav().then(obj => {
-      obj.map(i => {
-        i.active = this.$route.name === i.name || this.$route.path === i.name
-
-        this.navs.push(i)
+    if (this.navs.length === 0) {
+      getNav().then(obj => {
+        obj.map(i => {
+          i.active = this.$route.name === i.name || this.$route.path === i.name
+          this.navs.push(i)
+        })
       })
-    })
+    } else {
+      this.navs = this.navs.map(i => {
+        i.active = this.$route.name === i.name || this.$route.path === i.name
+        return i
+      })
+    }
   }
 }
 </script>
 
 <style lang="scss">
+$main-color: #66D37E;
+$normal-color: rgba(255, 255, 255, 0.7);
+
+.header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  padding: 20px 0;
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.7);
+
+  .nav-container {
+    max-width: 1100px;
+    position: relative;
+    margin: 0 auto;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .title {
+    color: $normal-color;
+  }
+
+  ul {
+
+    padding: 0;
+    margin: 2px 0 0 0;
+
+    li {
+
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: inline;
+
+      &.active > a {
+          color: $main-color;
+      }
+
+      a {
+        text-transform: uppercase;
+        font-size: 16px;
+        letter-spacing: .08em;
+        padding: 28px 15px;
+        color: $normal-color;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+
+        &:hover {
+          color: white;
+          outline: none;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+
 .header {
   text-align: center;
   max-width: 980px;
@@ -130,13 +223,13 @@ export default {
   }
 }
 
-.title {
-  height: 80px;
-  /*width: 110px;*/
-  position: relative;
-  display: block;
-  float: left;
-}
+// .title {
+//   height: 80px;
+//   /*width: 110px;*/
+//   position: relative;
+//   display: block;
+//   float: left;
+// }
 
 .pic {
   background: url(/static/blank.png);

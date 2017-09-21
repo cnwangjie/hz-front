@@ -1,6 +1,6 @@
 <template lang="html">
 
-<div class="col-sm-3">
+<div class="col-sm-3 sidebar">
   <div class="block">
     <div class="block-head">
       搜索
@@ -49,6 +49,9 @@ export default {
 </script>
 
 <style lang="scss">
+.sidebar {
+  margin-top: 40px;
+}
 .block {
 }
 .block-head {

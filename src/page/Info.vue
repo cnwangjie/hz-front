@@ -1,25 +1,30 @@
 <template lang="html">
 <div>
   <navbar></navbar>
-  <div class="container main">
 
-    <div class="row">
-      <div class="col-sm-offset-1 col-sm-7">
-        <div v-for="article in articles" class="article-list">
-          <router-link :to="`article/${article.id}`">
-            <div class="head">
-              <strong>{{ article.title }}</strong>
+  <blank></blank>
+
+  <div class="gray-bg">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-offset-1 col-sm-7">
+          <div v-for="article in articles" class="article-list">
+            <router-link :to="`article/${article.id}`">
+              <div class="head">
+                <strong>{{ article.title }}</strong>
+              </div>
+            </router-link>
+            <div class="content">
+              {{ article.content }}
             </div>
-          </router-link>
-          <div class="content">
-            {{ article.content }}
           </div>
+          <button class="btn btn-lg center-block loadmore" v-on:click="getData()">加载更多</button>
         </div>
-        <button class="btn btn-lg center-block" style="background:#dddcd9" v-on:click="getData()">加载更多</button>
+        <sidebar></sidebar>
       </div>
-      <sidebar></sidebar>
-    </div>
 
+    </div>
   </div>
   <foot></foot>
 </div>
@@ -28,35 +33,39 @@
 <script>
 import sidebar from './../components/Sidebar'
 import navbar from './../components/Navbar'
+import blank from './../components/Blank'
 import foot from './../components/Foot'
 import {getLastestArticle} from './../service/getData'
+import {mapState, mapMutations} from 'vuex'
 
 export default {
   data() {
     return {
-      articles: [],
-      page: 0,
     }
+  },
+  computed: {
+    ...mapState(['articles'])
   },
   components: {
     sidebar,
     navbar,
-    foot
+    blank,
+    foot,
   },
   created() {
     window.document.title = '首页 | 徽州文化服务云平台'
-    this.getData()
+    if (this.articles.length === 0) this.getData()
   },
   methods: {
     getData() {
-      getLastestArticle({page: this.page}).then(obj => {
+      const page = this.articles.length / 10 << 0
+      getLastestArticle({page: page}).then(obj => {
         obj.map(i => {
           if (i.content.length > 200) {
             i.content = i.content.replace(/<[^<>]+>/ig, '').substr(0, 200) + '...'
           }
           this.articles.push(i)
         })
-        this.page += 1
       })
     }
   }
@@ -65,16 +74,8 @@ export default {
 
 <style lang="scss">
 
-body {
-  font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
-  background: #d7d6d2;
-}
-
-.main {
-  margin-top: 40px;
-}
-
 .article-list {
+  padding-top: 40px;
   margin-bottom: 50px;
   padding-bottom: 50px;
   border-bottom: 1px solid rgba(180, 180, 180, 0.5);
@@ -91,12 +92,12 @@ body {
     width: 100%;
     min-height: 20px;
     line-height: 24px;
-    background: #d7d6d2;
     padding: 0 8px;
     font-size: 23px;
     font-weight: 500;
     transition: .2s;
     cursor: pointer;
+    color: black;
     &:hover {
       transition: .2s;
       color: rgba(0, 0, 0, 0.5);
@@ -117,6 +118,9 @@ body {
       padding: 20px 0 0;
     }
   }
+}
+.loadmore {
+  margin-bottom: 20px;
 }
 
 </style>

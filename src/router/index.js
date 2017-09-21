@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '@/page/Home'
 import Class from '@/page/Class'
 import ClassDetail from '@/components/ClassDetail'
-import Index from '@/page/Index'
+import Info from '@/page/Info'
 import Page from '@/page/Page'
 import Article from '@/page/Article'
 import Search from '@/page/Search'
@@ -36,7 +36,7 @@ export default new Router({
     },
     {
       path: '/info',
-      component: Index,
+      component: Info,
       name: 'info'
     },
     {
