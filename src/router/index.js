@@ -70,11 +70,13 @@ export default new Router({
       children: [
         {
           path: 'article',
-          component: ArticleAdmin
+          component: ArticleAdmin,
+          name: 'articleAdmin'
         },
         {
           path: 'resource/:path*',
-          component: ResourceAdmin
+          component: ResourceAdmin,
+          name: 'resourceAdmin'
         }
       ]
     }

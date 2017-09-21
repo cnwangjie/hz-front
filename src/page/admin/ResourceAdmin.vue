@@ -117,13 +117,10 @@ export default {
   watch: {
     'searchword': 'search',
     'curpath': 'resolvePaths',
+    '$route.params': 'syncRouteToPath',
   },
   created() {
-    if (this.$route.params.path)
-      this.changePath(this.$route.params.path)
-    else {
-      this.changePath('/')
-    }
+    syncRouteToPath()
   },
   methods: {
     resolvePaths() {
@@ -187,7 +184,17 @@ export default {
     },
     copyLink(path) {
       prompt('请使用ctrl+c复制', apiurl + '/resource/' + path)
-    }
+    },
+    syncRouteToPath() {
+      if (this.$route.name !== 'resourceAdmin')
+        return
+
+      if (this.$route.params.path)
+        this.changePath(this.$route.params.path)
+      else {
+        this.changePath('/')
+      }
+    },
   }
 }
 </script>
