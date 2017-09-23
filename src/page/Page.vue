@@ -33,12 +33,4 @@ export default {
 
 <style lang="css">
 
-body {
-  font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
-  background: #d7d6d2;
-}
-
-.main {
-  margin-top: 40px;
-}
 </style>

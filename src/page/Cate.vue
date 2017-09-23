@@ -75,10 +75,6 @@ export default {
 
 <style lang="css">
 
-.main {
-  margin-top: 40px;
-}
-
 .cate-name {
   font-size: 40px;
   margin-bottom: 10px;

@@ -1,6 +1,6 @@
 <template lang="html">
 
-<div class="col-sm-3 sidebar">
+<div class="col-sm-3 front-sidebar">
   <div class="block">
     <div class="block-head">
       搜索
@@ -49,23 +49,23 @@ export default {
 </script>
 
 <style lang="scss">
-.sidebar {
+.front-sidebar {
   margin-top: 40px;
-}
-.block {
-}
-.block-head {
-  height: 40px;
-  background: url(/static/block-head-bg.png);
-  background-size: cover;
-  background-position: center 50%;
-  background-repeat: no-repeat;
-  padding: 4px 0 0 40px;
-  font-size: 18px;
-}
-.block-content {
-  position: relative;
-  padding: 12px 20px;
+  .block {
+    .block-head {
+      height: 40px;
+      background: url(/static/block-head-bg.png);
+      background-size: cover;
+      background-position: center 50%;
+      background-repeat: no-repeat;
+      padding: 4px 0 0 40px;
+      font-size: 18px;
+    }
+    .block-content {
+      position: relative;
+      padding: 12px 20px;
+    }
+  }
 }
 .readmore {
   cursor: pointer;

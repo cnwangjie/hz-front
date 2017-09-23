@@ -59,10 +59,6 @@ export default {
 
 <style lang="scss">
 
-.main {
-  margin-top: 40px;
-}
-
 .archives {
   padding: 10px;
   .archive {
