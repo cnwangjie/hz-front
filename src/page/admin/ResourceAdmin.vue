@@ -8,7 +8,7 @@
     </li>
   </ol>
   <a v-on:click="showModal('#uploadfile')" class="btn btn-primary">上传文件</a>
-  <a v-on:click="showModal('#mkdir')" class="btn btn-primary">创建目录</a>
+  <!-- <a v-on:click="showModal('#mkdir')" class="btn btn-primary">创建目录</a> -->
   <a v-on:click="changePath(curpath)" class="btn btn-primary">刷新目录</a>
   <div class="table-responsive">
     <table class="table table-striped">
@@ -22,7 +22,11 @@
       </thead>
       <tbody>
         <tr v-for="f in files">
-          <td>{{ f.name }}</td>
+          <td>
+            <a v-on:click="preview(f.path)" v-if="isVisable(f.name)">{{ f.name }}</a>
+            <a v-on:click="changePath(f.path)" v-else-if="f.isdir">{{ f.name }}</a>
+            <span v-else>{{ f.name }}</span>
+          </td>
           <td>{{ humanSize(f.size) }}</td>
           <td>{{ new Date(f.modified).toLocaleString() }}</td>
           <td>
@@ -44,7 +48,18 @@
         </div>
         <div class="modal-body">
 
-          <div class="alert alert-dismissible fade in" role="alert" :class="uploadmsg.status === 'success' ? 'alert-success' : 'alert-danger'" v-if="uploadmsg">
+          <dropzone
+            id="dropzone"
+            :url="uploadApiUrl"
+            :param-name="'file'"
+            :headers="uploadHeaders"
+            :max-file-size-in-mb="2048"
+            :max-number-of-files="20"
+            :timeout="60000">
+            <input type="hidden" name="path" v-model="curpath">
+          </dropzone>
+
+          <!-- <div class="alert alert-dismissible fade in" role="alert" :class="uploadmsg.status === 'success' ? 'alert-success' : 'alert-danger'" v-if="uploadmsg">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
             <strong>{{ uploadmsg.status }}</strong> {{ uploadmsg.msg }}
           </div>
@@ -53,13 +68,13 @@
             <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" v-bind:style="'width: ' + uploadProgress">
               <span class="sr-only">{{ uploadProgress }} Complete</span>
             </div>
-          </div>
+          </div> -->
 
-          <input v-on:change="changeToUploadFile" name="file" type="file"></input>
+          <!-- <input v-on:change="changeToUploadFile" name="file" type="file"></input> -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" v-on:click="uploadfile()">Upload</button>
+          <!-- <button type="button" class="btn btn-primary" v-on:click="uploadfile()">Upload</button> -->
         </div>
       </div>
     </div>
@@ -87,12 +102,32 @@
     </div>
   </div>
 
+  <div class="modal fade bs-example-modal-lg" id="preview" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">{{ previewingFilename }}</h4>
+        </div>
+        <div class="modal-body">
+          <img class="preview-item" v-if="previewingFiletype === 'img'" :src="`${apiurl}/resource/${previewingFilename}`"></img>
+          <video class="preview-item" v-if="previewingFiletype === 'video'" :src="`${apiurl}/resource/${previewingFilename}`" controls="controls"></video>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" v-on:click="makeDirectory()">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 </div>
 </template>
 
 <script>
 import {apiurl} from './../../service/config'
+import Dropzone from 'vue2-dropzone'
 
 import {
   getResources,
@@ -103,6 +138,11 @@ import {
 export default {
   data() {
     return {
+      uploadApiUrl: `${apiurl}/api/resource/upload`,
+      uploadHeaders: {
+        Authorization: localStorage.getItem('admin-token'),
+      },
+      apiurl: apiurl,
       curpath: '',
       paths: [],
       files: [],
@@ -112,7 +152,12 @@ export default {
       uploading: false,
       uploadProgress: '',
       uploadmsg: false,
+      previewingFilename: '',
+      previewingFiletype: '',
     }
+  },
+  components: {
+    Dropzone,
   },
   watch: {
     'searchword': 'search',
@@ -120,7 +165,7 @@ export default {
     '$route.params': 'syncRouteToPath',
   },
   created() {
-    syncRouteToPath()
+    this.syncRouteToPath()
   },
   methods: {
     resolvePaths() {
@@ -195,6 +240,22 @@ export default {
         this.changePath('/')
       }
     },
+    isVisable(filename) {
+      const suffix = filename.split('.').pop()
+      const allowedSuffix = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'mp4']
+      return allowedSuffix.indexOf(suffix.toLowerCase()) !== -1
+    },
+    preview(filename) {
+      switch (filename.split('.').pop()) {
+        case 'mp4':
+          this.previewingFiletype = 'video'
+          break;
+        default:
+          this.previewingFiletype = 'img'
+      }
+      this.previewingFilename = filename
+      $('#preview').modal('show')
+    }
   }
 }
 </script>
@@ -203,5 +264,12 @@ export default {
 .squre-block {
   margin: 20px;
   padding: 20px;
+}
+
+#preview {
+  .preview-item {
+    display: block;
+    max-width: 100%;
+  }
 }
 </style>
