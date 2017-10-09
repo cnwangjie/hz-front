@@ -28,8 +28,7 @@
   <div class="">
     <label>内容</label>
     <ueditor
-    :content="moding.content"
-    @contentChange="onContentChange($event)"
+    v-model="moding.content"
     ref="myUeditor"></ueditor>
   </div>
 </div>
@@ -139,9 +138,6 @@ export default {
           }
         })
       }
-    },
-    onContentChange(content) {
-      this.moding.content = content
     },
   }
 }

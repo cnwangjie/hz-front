@@ -21,17 +21,14 @@ export default {
   },
   props: {
     value: String,
-    content: String,
   },
   watch: {
-    'content'(newVal, oldVal) {
+    'value'(newVal, oldVal) {
       if (this.ready) {
         if (newVal !== this._content) {
           this._content = newVal
           this.ue.setContent(newVal)
         }
-      } else {
-
       }
     }
   },
@@ -71,7 +68,11 @@ export default {
         else
           this._content = html
 
-        this.$emit('contentChange', this._content)
+        this.$emit('input', this._content)
+        this.$emit('change', {
+          editor: this.ue,
+          content: this._content,
+        })
       })
     },
   }
