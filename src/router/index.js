@@ -12,6 +12,7 @@ import Archive from '@/page/Archive'
 import Admin from '@/page/admin/Index'
 import ArticleAdmin from '@/page/admin/ArticleAdmin'
 import ResourceAdmin from '@/page/admin/ResourceAdmin'
+import ArticleEdit from '@/page/admin/ArticleEdit'
 
 Vue.use(Router)
 
@@ -69,9 +70,19 @@ export default new Router({
       component: Admin,
       children: [
         {
+          path: 'article/new',
+          component: ArticleEdit,
+          name: 'articleNew'
+        },
+        {
+          path: 'article/:id',
+          component: ArticleEdit,
+          name: 'articleEdit'
+        },
+        {
           path: 'article',
           component: ArticleAdmin,
-          name: 'articleAdmin'
+          name: 'articleAdmin',
         },
         {
           path: 'resource/:path*',

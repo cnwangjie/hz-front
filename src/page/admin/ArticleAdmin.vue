@@ -30,7 +30,8 @@
           <td>{{ a.title }}</td>
           <td>{{ a.cates.map(i => cates[i].name).join(',') }}</td>
           <td>
-            <a v-on:click="modifyAritcle(a.id)" class="btn btn-sm btn-warning">编辑</a>
+            <!-- <a v-on:click="modifyAritcle(a.id)" class="btn btn-sm btn-warning">编辑</a> -->
+            <router-link :to="`/admin/article/${a.id}`" class="btn btn-sm btn-warning">编辑</router-link>
             <a v-on:click="removeArticle(a.id)" class="btn btn-sm btn-danger">删除</a>
           </td>
         </tr>
@@ -38,7 +39,7 @@
     </table>
   </div>
 
-  <div class="modal fade bs-example-modal-lg" id="modarticle" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <!-- <div class="modal fade bs-example-modal-lg" id="modarticle" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -73,7 +74,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 </template>
 
@@ -140,7 +141,7 @@ export default {
     'searchword': 'search'
   },
   components: {
-    quillEditor
+    quillEditor,
   },
   created() {
     getAllCates().then(obj => {
