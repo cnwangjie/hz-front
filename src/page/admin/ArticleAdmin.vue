@@ -10,7 +10,8 @@
     </div>
   </div> -->
   <a v-on:click="getArticleList()" class="btn btn-primary">更新文章列表</a>
-  <a v-on:click="newArticle()" class="btn btn-primary">添加文章</a>
+  <!-- <a v-on:click="newArticle()" class="btn btn-primary">添加文章</a> -->
+  <router-link :to="'/admin/article/new'" class="btn btn-primary">添加文章</router-link>
   <span>共有 <b>{{ articlesum }}</b> 篇文章</span>
   <h2 class="sub-header">管理</h2>
   <input type="text" class="form-control" placeholder="搜索" v-model="searchword"></input>

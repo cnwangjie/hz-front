@@ -30,9 +30,15 @@
           <td>{{ humanSize(f.size) }}</td>
           <td>{{ new Date(f.modified).toLocaleString() }}</td>
           <td>
-            <a v-on:click="copyLink(f.path)" class="btn btn-sm btn-info" v-if="!f.isdir">复制链接</a>
-            <a v-on:click="changePath(f.path)" class="btn btn-sm btn-primary" v-else>进入目录</a>
+            <a
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="copied!"
+            data-trigger="click"
+            :clipdata="f.path" class="btn btn-sm btn-info clipbtn" v-if="!f.isdir">复制链接</a>
+            <a v-on:click="changePath(f.path)" class="btn btn-sm btn-primary" v-if="f.isdir">进入目录</a>
             <a v-on:click="remove(f.path)" class="btn btn-sm btn-danger" v-if="false">删除</a>
+            <a v-on:click="preview(f.path)" class="btn btn-sm" v-if="!f.isdir && isVisable(f.name)">设置属性</a>
           </td>
         </tr>
       </tbody>
@@ -53,9 +59,10 @@
             :url="uploadApiUrl"
             :param-name="'file'"
             :headers="uploadHeaders"
-            :max-file-size-in-mb="2048"
+            :maxFileSizeInMB="2048"
             :max-number-of-files="20"
-            :timeout="60000">
+            :timeout="60000"
+            :vdropzone-success="() => {changePath(curpath)}">
             <input type="hidden" name="path" v-model="curpath">
           </dropzone>
 
@@ -112,9 +119,21 @@
         <div class="modal-body">
           <img class="preview-item" v-if="previewingFiletype === 'img'" :src="`${apiurl}/resource/${previewingFilename}`"></img>
           <video class="preview-item" v-if="previewingFiletype === 'video'" :src="`${apiurl}/resource/${previewingFilename}`" controls="controls"></video>
+
+          <div class="form-group">
+            <label>描述</label>
+            <input type="text" class="form-control" placeholder="描述" v-model="previewingResource.description"></input>
+          </div>
+
+          <div class="form-group">
+            <label>链接</label>
+            <input type="text" class="form-control" placeholder="链接" v-model="previewingResource.link"></input>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" v-on:click="editInfo()">Save</button>
         </div>
       </div>
     </div>
@@ -127,11 +146,14 @@
 <script>
 import {apiurl} from './../../service/config'
 import Dropzone from 'vue2-dropzone'
+import Clipboard from 'clipboard'
 
 import {
   getResources,
   mkdir,
   uploadFile,
+  getResourceInfo,
+  editResourceInfo,
 } from './../../service/getData'
 
 export default {
@@ -153,6 +175,7 @@ export default {
       uploadmsg: false,
       previewingFilename: '',
       previewingFiletype: '',
+      previewingResource: {},
     }
   },
   components: {
@@ -165,6 +188,22 @@ export default {
   },
   created() {
     this.syncRouteToPath()
+  },
+  updated() {
+    new Clipboard('.clipbtn', {
+      text: (trigger) => {
+        const path = trigger.getAttribute('clipdata')
+        return apiurl + '/resource/' + path
+      }
+    })
+    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').each((index, item) => {
+      $(item).on('shown.bs.tooltip', () => {
+        setTimeout(() => {
+          $(item).tooltip('hide')
+        }, 1000)
+      })
+    })
   },
   methods: {
     resolvePaths() {
@@ -244,17 +283,39 @@ export default {
       const allowedSuffix = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'mp4']
       return allowedSuffix.indexOf(suffix.toLowerCase()) !== -1
     },
-    preview(filename) {
-      switch (filename.split('.').pop()) {
+    preview(filepath) {
+      switch (filepath.split('.').pop()) {
         case 'mp4':
           this.previewingFiletype = 'video'
           break;
         default:
           this.previewingFiletype = 'img'
       }
-      this.previewingFilename = filename
+      this.previewingFilename = filepath
+      getResourceInfo(filepath).then(obj => {
+        if ('path' in obj) {
+          this.previewingResource = obj
+        } else {
+          this.previewingResource = {
+            id: 0,
+            path: filepath,
+            name: '',
+            description: '',
+            link: '',
+          }
+        }
+      })
       $('#preview').modal('show')
-    }
+    },
+    editInfo() {
+      editResourceInfo(this.previewingResource).then(obj => {
+        if ('path' in obj) {
+          $('#preview').modal('hide')
+        } else {
+
+        }
+      })
+    },
   }
 }
 </script>

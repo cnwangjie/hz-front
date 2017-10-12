@@ -69,11 +69,16 @@ export const getAllCates = () => fetchData(`/api/cate/all`)
 
 export const getResources = path => fetchData(`/api/resource/list`, 'GET', {path})
 
+export const getResourceInfo = path => fetchData(`/api/resource/get`, 'GET', {path})
+
+export const editResourceInfo = obj => fetchData(`/api/resource/edit-info`, 'POST', obj)
+
 export const mkdir = (path, name) => fetchData(`/api/resource/mkdir`, 'POST', {path, name})
 
 export const authValid = () => fetchData(`/auth/test`, 'POST').then(json => {
   return /success/i.test(json.status)
 })
+
 
 export const uploadFile = ({path, files, progressHandler}) => {
   return new Promise((resolve, reject) => {

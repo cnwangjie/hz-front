@@ -17,7 +17,7 @@
   </div>
   <div class="form-group">
     <label>作者</label>
-    <input type="text" class="form-control" placeholder="作者" v-model="moding.author"></input>
+    <input type="text" class="form-control" placeholder="作者(可选)" v-model="moding.author"></input>
   </div>
   <div class="form-group">
     <label>分类</label>
@@ -84,6 +84,8 @@ export default {
   },
   methods: {
     changeContent() {
+      this.savesuccess = null
+
       const routeName = this.$route.name
       if (routeName === 'articleNew') this.newArticle()
       else if (routeName === 'articleEdit') {
