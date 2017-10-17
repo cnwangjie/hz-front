@@ -127,7 +127,10 @@
 
           <div class="form-group">
             <label>链接</label>
-            <input type="text" class="form-control" placeholder="链接" v-model="previewingResource.link"></input>
+            <select class="form-control" v-model="previewingResource.link">
+              <option v-for="a in articles" :value="a.id">{{ a.title }}</option>
+            </select>
+            <!-- <input type="text" class="form-control" placeholder="链接" v-model="previewingResource.link"></input> -->
           </div>
 
         </div>
@@ -150,6 +153,7 @@ import Clipboard from 'clipboard'
 
 import {
   getResources,
+  getAllArticle,
   mkdir,
   uploadFile,
   getResourceInfo,
@@ -159,6 +163,7 @@ import {
 export default {
   data() {
     return {
+      articles: [],
       uploadApiUrl: `${apiurl}/api/resource/upload`,
       uploadHeaders: {
         Authorization: localStorage.getItem('admin-token'),
@@ -188,6 +193,11 @@ export default {
   },
   created() {
     this.syncRouteToPath()
+    getAllArticle().then(obj => {
+      if (Array.isArray(obj)) {
+        this.articles = obj
+      }
+    })
   },
   updated() {
     new Clipboard('.clipbtn', {
@@ -294,6 +304,11 @@ export default {
       this.previewingFilename = filepath
       getResourceInfo(filepath).then(obj => {
         if ('path' in obj) {
+          for (let key in obj) {
+            if (obj[key] === 'null') {
+              obj[key] = ''
+            }
+          }
           this.previewingResource = obj
         } else {
           this.previewingResource = {
