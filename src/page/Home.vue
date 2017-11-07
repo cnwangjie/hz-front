@@ -1,99 +1,69 @@
 <template lang="html">
-<div>
+<div class="zhuye">
   <navbar></navbar>
 
-  <blank></blank>
+  <!-- <blank></blank> -->
+  <!--div class="navbar">
+    <div class="logo"></div>
 
-  <div class="flex-section gray-bg home-page">
-    <div class="col-1">
-      <div class="text">
-				<div class="row row-pb-sm">
-					<div class="col-md-12">
-            <div>
+    <div class="hzwh">徽州文化·云服务平台</div>
+  </div-->
+    <!--div class="Search">
+      <input  type="search" class="search">
+      <button type="search" class="sousuo">搜索</button>
+    </div-->
 
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs home-overview-btn" role="tablist">
-                <li v-for="item, index in overviews"
-                    :class="index === 0 ? 'active' : ''">
-                  <a v-bind:href="'#item' + index"
-                     v-bind:aria-controls="'item' + index"
-                     role="tab" data-toggle="tab">
-                    <span>{{ item.name }}</span>
-                  </a>
-                </li>
-              </ul>
 
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div v-for="item, index in overviews" role="tabpanel" class="tab-pane fade" :class="index === 0 ? 'active in' : ''" v-bind:id="'item' + index" v-html="item.content">
-                </div>
-              </div>
+  <div class="zhutu"></div>
 
-            </div>
-          </div>
-				</div>
-			</div>
+  <!--div class="fzl">
+    <ul>
+      <li style="background-image: url(/static/fenlei.png)" onclick=""></li>
+      <li style="background-image: url(/static/zixun.png)"></li>
+      <li style="background-image: url(/static/lianxi.png"></li>
+    </ul>
+  </div-->
+
+  <div class="hc">
+    <div class="hp">
     </div>
-    <div class="col-2 flex-img" style="background-image: url(https://freehtml5.co/demos/honest/premium/images/img_1.jpg);"></div>
   </div>
 
-  <div class="gtco-cover gtco-cover-sm" style="background-image: url(/static/blank.jpeg); background-position: 50% -77.5px;" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="gtco-container text-center">
-			<div class="display-t">
-				<div class="display-tc">
-					<h1>文化</h1>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="text">
+      <div class="sample">
+        <p>刘伯山认为徽州文化即是指发生与存在于历史上徽州的以及由此发生辐射、影响于外的典型封建文化。</p>
+        <p>其一，我们说的徽州文化是指历史上徽州区划范围内的文化。
+          其地理区域范围包括当年徽州府辖的6个县，即歙县、休宁、黟县、祁门、绩溪和婺源。</p>
+        <p>其二，徽州的历史至少有五、六千年，其文化当然可归为广义的大徽州文化的范围。
+        但严格和典型意义上所说的徽州文化概念，主要还是指北宋宣和三年(公元1121年)设了徽州府后才全面崛起，
+        在明清时达到鼎盛的文化，但这一文化与其早期发展及后期演变都有内在关联。</p>
+        <p>其三，徽州文化不能仅仅指在徽州本土上存在的文化，亦还包括由徽州而发生，
+        由本籍包括寄籍、侨居外地的徽州人而创造从而辐射于外、影响于外的文化。</p>
+        <p>其四，这里所说的“文化”应是取其广义的概念，不仅指学术理论、文化艺术，还包括商业经营、宗法伦理、精神信仰、风俗民情、文献著作、社会经济、土地制度、历史人物等等。
+        如此界定的徽州文化概念，实际是将徽州历史文化作为一个独立的、多元的、系列的整体，既有显明的地理空间和时间流程上的限定性，又有内容实质上的限定性，以及由此限定而内在包括的对自身限定的一体化超越，决定了徽学研究的对象。</p>
+        <p>卞利认为徽州文化主要是指历史上由徽州人创造并根植于徽州本土，经由徽州商帮和徽州士人向外传播和辐射，进而影响其他地域文化进程的一种区域历史文化。</p>
+      </div>
+  </div>
 
-  <div id="gtco-counter">
-  		<div class="gtco-container">
+  <div class="pic"></div>
+  
+  <div class="anniu">
+    <ul>
+      <li v-for="item in overviews"
+          :style="`background-image: url(${item.image})`"
+          v-on:click="dangqian = item.name"></li>
+    </ul>
+  </div>
 
-  			<!-- <div class="row">
-  				<div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box fadeInUp animated-fast">
-  					<h2>Facts</h2>
-  					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-  				</div>
-  			</div> -->
 
-  			<div class="row">
+  <div class="neirong">
+    <div class="pict" :style="`background-image:url(${handledOverviews[dangqian].pict})`"> </div>
+    <div class="nr" v-html="handledOverviews[dangqian].content"></div>
+  </div>
 
-  				<div class="col-md-3 col-sm-6 animate-box fadeInUp animated-fast" data-animate-effect="fadeInUp">
-  					<div class="feature-center">
-  						<span class="counter js-counter" data-from="0" data-to="196" data-speed="5000" data-refresh-interval="50">196</span>
-  						<span class="counter-label">文章</span>
-
-  					</div>
-  				</div>
-  				<div class="col-md-3 col-sm-6 animate-box fadeInUp animated-fast" data-animate-effect="fadeInUp">
-  					<div class="feature-center">
-  						<span class="counter js-counter" data-from="0" data-to="97" data-speed="5000" data-refresh-interval="50">97</span>
-  						<span class="counter-label">图片</span>
-  					</div>
-  				</div>
-  				<div class="col-md-3 col-sm-6 animate-box fadeInUp animated-fast" data-animate-effect="fadeInUp">
-  					<div class="feature-center">
-  						<span class="counter js-counter" data-from="0" data-to="12402" data-speed="5000" data-refresh-interval="50">12402</span>
-  						<span class="counter-label">动漫</span>
-  					</div>
-  				</div>
-  				<div class="col-md-3 col-sm-6 animate-box fadeInUp animated-fast" data-animate-effect="fadeInUp">
-  					<div class="feature-center">
-  						<span class="counter js-counter" data-from="0" data-to="12202" data-speed="5000" data-refresh-interval="50">12202</span>
-  						<span class="counter-label">视频</span>
-
-  					</div>
-  				</div>
-
-  			</div>
-  		</div>
-  	</div>
-
-    <searchForm></searchForm>
-
-    <foot></foot>
+  <div class="bottom">
+    <div class="zhushi"> © 2017 All Rights Reserved.</div>
+  </div>
 
 </div>
 </template>
@@ -107,10 +77,17 @@ import searchForm from './../components/SearchForm'
 import overviews from './../assets/homeSection'
 import {getLastestArticle} from './../service/getData'
 
+const handledOverviews = overviews.reduce((r, i) => {
+  r[i.name] = i
+  return r
+}, {})
+
 export default {
   data() {
     return {
-      overviews
+      overviews,
+      handledOverviews,
+      dangqian: Object.keys(handledOverviews).shift(),
     }
   },
   components: {
@@ -129,6 +106,169 @@ export default {
 </script>
 
 <style lang="scss">
+
+.zhuye {
+  background: #e7e5d0;
+}
+
+ /*.navbar {
+  background-color: gray;
+  margin: 0;
+  max-height: 77px;
+  .logo {
+    height: 65px;
+    width: 65px;
+    margin-bottom: 10px;
+    float: left;
+    margin-left: 100px;
+    background-image: url(/static/logo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .hzwh {
+    height: 65px;
+    width: 400px;
+    float: left;
+    margin-left: 50px;
+    margin-top: 10px;
+    font-size: 200%;
+    font-family: Nsimsun;
+    color: white;
+    display: inline-block;
+  }
+  .Search {
+    position: relative;
+    width: 55%;
+    float: left;
+    margin-top: 12px;
+    display: inline-block;
+
+    .search {
+      width: 300px;
+      background: #808080;
+      font-size: 18pt;
+      float: left;
+      margin-left: 61%;
+      background: #d1e3db;
+
+    }
+    .sousuo {
+      float: left;
+      margin-left: 20px;
+      width: 80px;
+      height: 40px;
+    }
+  }
+}*/
+
+.zhutu {
+  width: 100%;
+  height: 500px;
+  background-image: url(/static/zhutu.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.fzl {
+  text-align:center;
+  ul {
+    min-height: 100px;
+    padding:4px 0;
+    margin:0;
+    overflow:hidden;
+    li {
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 120px;
+      width: 20%;
+      padding-bottom: 10%;
+    }
+  }
+}
+.hc {
+  height: 120px;
+  max-width: 800px;
+  margin: 0 auto;
+  .hp {
+    height: 120px;
+    background-image: url(/static/guanyuhuiwenhua.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
+
+.text {
+  height: auto;
+  position: relative;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-bottom: 10px;
+  .sample {
+    border: 0px;
+    max-width: 950px;
+    height: 150px;
+    overflow: auto;
+  }
+}
+.bottom {
+  text-align: right;
+  line-height: 120px;
+  overflow:hidden;
+  width: 100%;
+  background-image: url(/static/weitu.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100% ;
+  .zhushi {
+    font-size: 20px;
+    margin-right: 8%;
+  }
+}
+
+.anniu {
+  background: #e7e5d0;
+  text-align:center;
+  ul {
+    padding:4px 0;
+    margin:0;
+    overflow:hidden;
+    li {
+      display: inline-block;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      width: 13%;
+      padding-bottom: 10%;
+    }
+  }
+}
+
+
+.neirong {
+  background: #e7e5d0;
+  max-width: 960px;
+  margin: 0 auto;
+  .pict {
+    position: absolute;
+    width: 130px;
+    height: 350px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .nr {
+    position: relative;
+    left: 130px;
+    width: 80%;
+    margin-bottom: 30px;
+  }
+
+}
+
 
 .gtco-container {
   max-width: 1100px;

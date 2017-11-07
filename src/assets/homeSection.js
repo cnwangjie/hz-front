@@ -1,33 +1,8 @@
 export default [
   {
-    name: '界定',
-    content: `<p style="text-indent: 0.33in;">
-<strong style="font-family: 宋体, SimSun;">刘伯山认为徽州文化即是指发生与存在于历史上徽州的以及由此发生辐射、影响于外的典型封建文化。</strong>
-</p>
-<p style="text-indent: 0.33in;margin-bottom: 0in;line-height: 150%">
-<span style="font-family:宋体, SimSun"><span style="">其一，我们说的徽州文化是指</span><span style=""><strong>历史上徽州区划范围内的文化</strong></span><span style="">。其地理区域范围包括当年徽州府辖的</span></span><span style="">6</span><span style="font-family:宋体, SimSun"><span style="">个县，即歙县、休宁、黟县、祁门、绩溪和婺源。</span></span>
-</p>
-<p style="text-indent: 0.33in;margin-bottom: 0in;line-height: 150%">
-<span style="font-family:宋体, SimSun"><span style="">其二，徽州的历史至少有五、六千年，其文化当然可归为广义的大徽州文化的范围。但严格和典型意义上所说的徽州文化概念，主要还是指</span><span style=""><strong>北宋宣和三年</strong></span></span><span style="">(</span><span style="font-family:宋体, SimSun"><span style="">公元</span></span><span style="">1121</span><span style="font-family:宋体, SimSun"><span style="">年</span></span><span style="">)</span><span style="font-family:宋体, SimSun"><span style="">设了徽州府后才全面崛起，在明清时达到鼎盛的文化，但这一文化与其早期发展及后期演变都有内在关联。</span></span>
-</p>
-<p style="text-indent: 0.33in;margin-bottom: 0in;line-height: 150%">
-<span style="font-family:宋体, SimSun"><span style="">其三，徽州文化不能仅仅指在徽州本土上存在的文化，亦还</span><span style=""><strong>包括由徽州而发生，由本籍包括寄籍、侨居外地的徽州人而创造从而辐射于外、影响于外的文化。</strong></span></span>
-</p>
-<p style="text-indent: 0.33in;margin-bottom: 0in;line-height: 150%">
-<span style="font-family:宋体, SimSun"><span style="">其四，这里所说的“文化”应是取其广义的概念，</span><span style=""><strong>不仅指学术理论、文化艺术，还包括商业经营、宗法伦理、精神信仰、风俗民情、文献著作、社会经济、土地制度、历史人物等等。</strong></span></span>
-</p>
-<p style="text-indent: 0.33in;margin-bottom: 0in;line-height: 150%">
-<span style="font-family:宋体, SimSun"><span style="">如此界定的徽州文化概念，实际是将徽州历史文化作为一个独立的、多元的、系列的整体，既有显明的地理空间和时间流程上的限定性，又有内容实质上的限定性，以及由此限定而内在包括的对自身限定的一体化超越，决定了徽学研究的对象。</span><sup><span style=""></span></sup></span>
-</p>
-<p style="text-indent: 0.33in;margin-bottom: 0in;line-height: 150%">
-<span style="font-family:宋体, SimSun"><span style=""><strong>卞利认为徽州文化主要是指历史上由徽州人创造并根植于徽州本土，经由徽州商帮和徽州士人向外传播和辐射，进而影响其他地域文化进程的一种区域历史文化。</strong></span></span>
-</p>
-<p>
-<br/>
-</p>`
-  },
-  {
     name: '发展',
+    image: '/static/fazhan.png',
+    pict: '/static/1.png',
     content: `
 <p style="text-indent: 0.33in;margin-bottom: 0in;line-height: 150%">
 <span style="font-family:宋体, SimSun"><span style="">实际上，徽州文化只是徽州历史文化发展的一个阶段。</span></span>
@@ -49,13 +24,12 @@ export default [
 </p>
 <p style="text-indent: 0.33in;margin-bottom: 0in;line-height: 150%">
 <span style="font-family:宋体, SimSun"><span style="">关于徽州文化的历史演进，程必定的看法具有代表性。他把徽州文化的演进分为三个阶段：第一阶段从四、五千年前的</span><span style=""><strong>远古到东汉时期</strong></span><span style="">，是古代徽州的山越文化阶段；第二阶段从</span><span style=""><strong>东晋到南宋</strong></span><span style="">，这个阶段可称为新安文化阶段；第三阶段从</span><span style=""><strong>南宋到民国时期</strong></span><span style="">，为徽州文化阶段，徽州文化逐步成型。他指出今人研究的徽州文化，主要是第三阶段形成的成型形态的徽州文化。</span><sup><span style=""></span></sup></span>
-</p>
-<p>
-<br/>
 </p>`
   },
   {
     name: '内容',
+    image: '/static/neirong.png',
+    pict: '/static/2.png',
     content: `<p>
 <br/>
 </p>
@@ -151,13 +125,12 @@ export default [
 </p>
 <p style="text-indent: 0.33in;margin-bottom: 0in;line-height: 150%">
 <span style="font-family:宋体, SimSun"><span style="">还有徽州的</span><span style=""><strong>经济社会结构和土地佃仆关系、徽州人的意识与价值观念、徽州人的风俗与信仰、徽州方言现象、徽州棚民现象</strong></span><span style="">等，这些都是徽州特有或表现极为典型、极具特色的文化现象，也都是徽州文化的重要内容。</span><sup><span style=""></span></sup></span>
-</p>
-<p>
-<br/>
 </p>`
   },
   {
     name: '特点',
+    image: '/static/tedian.png',
+    pict: '/static/3.png',
     content: `<p>
 <br/>
 </p>
@@ -181,13 +154,12 @@ export default [
 </p>
 <p>
 <a href="#sdfootnote1anc">1</a> <span style="font-family:宋体, SimSun">刘伯山</span>.<span style="font-family:宋体, SimSun">徽州文化的基本概念及历史地位</span>[J].<span style="font-family:宋体, SimSun">安徽大学学报</span>,2002<span style="font-family:宋体, SimSun">，</span>(6)<span style="font-family:宋体, SimSun">．</span>
-</p>
-<p>
-<br/>
 </p>`
   },
   {
     name: '地位',
+    image: '/static/diwei.png',
+    pict: '/static/4.png',
     content: `<p>
 <br/>
 </p>
@@ -230,6 +202,8 @@ export default [
   },
   {
     name: '意义',
+    image: '/static/yiyi.png',
+    pict: '/static/5.png',
     content: `<p>
 <br/>
 </p>
