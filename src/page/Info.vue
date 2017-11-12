@@ -2,7 +2,9 @@
 <div>
   <navbar></navbar>
 
-  <blank></blank>
+  <!-- <blank></blank> -->
+
+  <div class="zhutu"></div>
 
   <div class="zhuye">
     <div class="container">
@@ -26,7 +28,11 @@
 
     </div>
   </div>
-  <foot></foot>
+  <!-- <foot></foot> -->
+
+  <div class="ditu">
+    <div class="zhushi"> © 2017 All Rights Reserved.</div>
+  </div>
 </div>
 </template>
 

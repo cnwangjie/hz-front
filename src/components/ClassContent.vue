@@ -36,7 +36,7 @@
                 </router-link>
                 <img v-else :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
               </div>
-              <span class="title">{{ item.name }}</span>
+              <span class="title">{{ item.name.split('.').slice(0, -1).join('.') }}</span>
             </div>
           </div>
           <div v-if="curType === 'article'" class="col-md-12">
@@ -84,7 +84,6 @@ export default {
     changeName() {
       this.curClass = this.$route.params.name
       this.curType = this.$route.params.type
-      console.log(this.curClass, this.curType)
       this.changeContent()
     },
     changeContent() {
@@ -117,7 +116,6 @@ export default {
       }
     },
     playvideo(item) {
-      console.log(item.url)
       window.open(item.url)
     }
   }
