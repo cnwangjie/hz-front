@@ -22,6 +22,35 @@ export default {
 body {
   font-family: -apple-system,SF UI Display,Arial,PingFang SC,Hiragino Sans GB,Microsoft YaHei,WenQuanYi Micro Hei,sans-serif;
 }
+
+.zhutu {
+  width: 100%;
+  height: 500px;
+  background-image: url(/static/zhutu.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.zhuye {
+  background: #e7e5d0;
+}
+
+.ditu {
+  text-align: right;
+  line-height: 120px;
+  overflow:hidden;
+  width: 100%;
+  background-image: url(/static/weitu.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100% ;
+  .zhushi {
+    font-size: 20px;
+    margin-right: 8%;
+  }
+}
+
 .gray-bg {
   background: #f6f9fc;
 }

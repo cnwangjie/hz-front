@@ -46,7 +46,7 @@
   </div>
 
   <div class="pic"></div>
-  
+
   <div class="anniu">
     <ul>
       <li v-for="item in overviews"
@@ -57,11 +57,11 @@
 
 
   <div class="neirong">
-    <div class="pict" :style="`background-image:url(${handledOverviews[dangqian].pict})`"> </div>
+    <div class="pict hidden-xs" :style="`background-image:url(${handledOverviews[dangqian].pict})`"> </div>
     <div class="nr" v-html="handledOverviews[dangqian].content"></div>
   </div>
 
-  <div class="bottom">
+  <div class="ditu">
     <div class="zhushi"> © 2017 All Rights Reserved.</div>
   </div>
 
@@ -106,10 +106,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-.zhuye {
-  background: #e7e5d0;
-}
 
  /*.navbar {
   background-color: gray;
@@ -162,15 +158,6 @@ export default {
   }
 }*/
 
-.zhutu {
-  width: 100%;
-  height: 500px;
-  background-image: url(/static/zhutu.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 .fzl {
   text-align:center;
   ul {
@@ -213,19 +200,8 @@ export default {
     height: 150px;
     overflow: auto;
   }
-}
-.bottom {
-  text-align: right;
-  line-height: 120px;
-  overflow:hidden;
-  width: 100%;
-  background-image: url(/static/weitu.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100% ;
-  .zhushi {
-    font-size: 20px;
-    margin-right: 8%;
+  @media (max-width: 767px) {
+    margin: 10px 25px;
   }
 }
 
@@ -265,6 +241,12 @@ export default {
     left: 130px;
     width: 80%;
     margin-bottom: 30px;
+  }
+  @media (max-width: 767px) {
+    .nr {
+      margin: 0 auto;
+      left: 0;
+    }
   }
 
 }

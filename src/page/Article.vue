@@ -1,22 +1,26 @@
 <template lang="html">
 <div>
   <navbar></navbar>
-
-  <div class="container article">
-    <div class="row">
-      <div class="col-sm-offset-1" v-bind:class="side ? 'col-sm-7' : 'col-sm-10'">
-        <div class="article">
-          <div class="article-head">
-            <h3>{{ title }}</h3>
-          </div>
-          <div class="article-content" v-html="content">
+  <div class="zhuye">
+    <div class="container article">
+      <div class="row">
+        <div class="col-sm-offset-1" v-bind:class="side ? 'col-sm-7' : 'col-sm-10'">
+          <div class="article">
+            <div class="article-head">
+              <h3>{{ title }}</h3>
+            </div>
+            <div class="article-content" v-html="content">
+            </div>
           </div>
         </div>
+        <sidebar v-if="side"></sidebar>
       </div>
-      <sidebar v-if="side"></sidebar>
     </div>
+
   </div>
-  <foot></foot>
+  <div class="ditu">
+    <div class="zhushi"> © 2017 All Rights Reserved.</div>
+  </div>
 </div>
 </template>
 

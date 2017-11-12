@@ -2,14 +2,15 @@
 <div>
   <navbar></navbar>
 
-  <blank></blank>
+  <!-- <blank></blank> -->
+  <div class="zhutu"></div>
 
-  <div class="gtco-section gray-bg">
-		<div class="gtco-container">
+  <div class="gtco-section zhuye">
+		<div class="gtco-container container">
 			<div class="row">
 
 				<div v-show="!active" class="col-lg-4 col-md-4 col-sm-6" v-for="item, index in classes">
-					<router-link :to="'/class/' + item.title" class="gtco-card-item">
+					<router-link :to="'/class/' + item.title" class="gtco-card-item card-item-ide">
 						<figure>
 							<div class="overlay">
                 <i class="ti-plus">
@@ -20,7 +21,7 @@
                   </svg>
                 </i>
               </div>
-							<img v-bind:src="'/static/' + item.title + '.jpg'" alt="Image" class="img-responsive">
+							<img style="width:100%;" v-bind:src="'/static/' + item.title + '.jpg'" alt="Image" class="img-responsive">
 						</figure>
 						<div class="gtco-text">
 							<h2>{{ item.title }}</h2>
@@ -37,8 +38,9 @@
 	</div>
 
 
-
-  <foot></foot>
+  <div class="ditu">
+    <div class="zhushi"> © 2017 All Rights Reserved.</div>
+  </div>
 </div>
 </template>
 
@@ -239,4 +241,12 @@ export default {
     .gtco-card-item:hover h2, .gtco-card-item:hover span, .gtco-card-item:focus h2, .gtco-card-item:focus span {
       text-decoration: none !important; }
 
+.card-item-ide {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  figure {
+    height: 130px;
+  }
+}
 </style>

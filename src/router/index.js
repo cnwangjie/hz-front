@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/page/Home'
 import Class from '@/page/Class'
 import ClassDetail from '@/components/ClassDetail'
+import ClassContent from '@/components/ClassContent'
 import Info from '@/page/Info'
 import Page from '@/page/Page'
 import Article from '@/page/Article'
@@ -27,13 +28,16 @@ export default new Router({
       path: '/class',
       component: Class,
       name: 'class',
-      children: [
-        {
-          path: ':name',
-          component: ClassDetail,
-          name: 'classDetail'
-        }
-      ]
+    },
+    {
+      path: '/class/:name',
+      component: ClassDetail,
+      name: 'classDetail'
+    },
+    {
+      path: '/class/:name/:type',
+      component: ClassContent,
+      name: 'classContent'
     },
     {
       path: '/info',
