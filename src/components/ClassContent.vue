@@ -31,7 +31,7 @@
               <video v-if="curType === 'video' || curType === 'anima'"
               :src="`${apiurl}/resource/${item.path}`" preload="metadata" v-on:click="playvideo(item)"></video>
               <div v-if="curType === 'photo'">
-                <router-link v-if="'link' in item" :to="isNaN(item.link) ? item.link : `/article/${item.link}`">
+                <router-link v-if="'link' in item && item.link" :to="isNaN(item.link) ? item.link : `/article/${item.link}`">
                   <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
                 </router-link>
                 <img v-else :src="`${apiurl}/resource/${item.path}`" :alt="item.name">

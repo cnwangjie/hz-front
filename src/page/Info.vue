@@ -4,7 +4,7 @@
 
   <blank></blank>
 
-  <div class="gray-bg">
+  <div class="zhuye">
     <div class="container">
 
       <div class="row">
