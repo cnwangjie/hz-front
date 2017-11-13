@@ -14,5 +14,17 @@ export default new Vuex.Store({
   actions: {
   },
   mutations: {
+    setNavs(state, obj) {
+      state.navs = obj
+    },
+    changeNavsActiveStatus(state, {
+      name,
+      path,
+    }) {
+      state.navs = state.navs.map(i => {
+        i.active = name === i.name || path === i.name
+        return i
+      })
+    }
   },
 })

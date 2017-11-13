@@ -69,18 +69,18 @@ export default {
     ...mapState(['navs'])
   },
   created() {
-    if (this.navs.length === 0) {
-      getNav().then(obj => {
-        obj.map(i => {
-          i.active = this.$route.name === i.name || this.$route.path === i.name
-          this.navs.push(i)
-        })
-      })
-    } else {
-      this.navs = this.navs.map(i => {
-        i.active = this.$route.name === i.name || this.$route.path === i.name
-        return i
-      })
+    this.init()
+  },
+  methods: {
+    ...mapMutations(['setNavs', 'changeNavsActiveStatus']),
+    async init() {
+      if (this.navs.length === 0) {
+        const navs = await getNav()
+        if ('length' in navs) {
+          this.setNavs(navs)
+        }
+      }
+      this.changeNavsActiveStatus(this.$route)
     }
   }
 }

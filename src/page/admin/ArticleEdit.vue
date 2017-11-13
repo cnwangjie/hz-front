@@ -45,17 +45,19 @@ import {
   getAllCates,
 } from './../../service/getData'
 
+const newArticle = {
+  id: null,
+  title: '',
+  author: '',
+  content: '',
+  cates: [],
+}
+
 export default {
   data() {
     return {
       savesuccess: null,
-      moding: {
-        id: null,
-        title: '',
-        author: '',
-        content: '',
-        cates: [],
-      },
+      moding: Object.assign({}, newArticle),
       cates: {},
     }
   },
@@ -87,22 +89,17 @@ export default {
       this.savesuccess = null
 
       const routeName = this.$route.name
-      if (routeName === 'articleNew') this.newArticle()
+      if (this.moding.id !== null && routeName === 'articleNew') this.newArticle()
       else if (routeName === 'articleEdit') {
         const articleId = this.$route.params.id
         this.modifyAritcle(articleId)
       }
     },
     newArticle() {
-      this.moding = {
-        id: null,
-        title: '',
-        author: '',
-        content: '',
-        cates: [],
-      }
+      this.moding = Object.assign({}, newArticle)
     },
     modifyAritcle(id) {
+      this.newArticle()
       getArticle(id).then(obj => {
         if (obj.author === 'null' || obj.author === null) {
           obj.author = ''
