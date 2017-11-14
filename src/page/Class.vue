@@ -246,7 +246,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   figure {
-    height: 130px;
+    height: 160px;
   }
 }
 </style>

@@ -36,7 +36,9 @@
                 </router-link>
                 <img v-else :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
               </div>
-              <span class="title">{{ item.name.split('.').slice(0, -1).join('.') }}</span>
+              <div class="title">
+                <span>{{ item.name.split('.').slice(0, -1).join('.') }}</span>
+              </div>
             </div>
           </div>
           <div v-if="curType === 'article'" class="col-md-12">
@@ -143,6 +145,11 @@ export default {
   position: relative;
   video, img {
     width: 100%;
+    height: 200px;
+  }
+  .title {
+    width: 100%;
+    text-align: center;
   }
 }
 </style>
