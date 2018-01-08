@@ -127,10 +127,19 @@
 
           <div class="form-group">
             <label>链接</label>
-            <select class="form-control" v-model="previewingResource.link">
-              <option v-for="a in articles" :value="a.id">{{ a.title }}</option>
+            <select class="form-control" v-model="previewingLinktype">
+              <option :value="'link'">外部链接</option>
+              <option :value="'article'">站内文章</option>
             </select>
             <!-- <input type="text" class="form-control" placeholder="链接" v-model="previewingResource.link"></input> -->
+          </div>
+
+          <div class="form-group">
+            <label>链接</label>
+            <input v-if="previewingLinktype === 'link'" class="form-control" v-model="previewingResource.link"></input>
+            <select v-if="previewingLinktype === 'article'" class="form-control" v-model="previewingResource.link" >
+               <option v-for="a in articles" :value="a.id">{{a.title}}</option>
+            </select>
           </div>
 
         </div>
@@ -181,6 +190,7 @@ export default {
       previewingFilename: '',
       previewingFiletype: '',
       previewingResource: {},
+      previewingLinktype: 'article',
     }
   },
   components: {

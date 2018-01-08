@@ -4,11 +4,14 @@
 		<div class="nav-container">
 
 			<div class="row">
-        <div class="col-sm-4 text-left">
+        <div class="col-sm-4 text-left" style="padding-top:13px">
           <span class="title">徽州文化服务云平台</span>
         </div>
 				<div class="col-sm-8 text-right">
 					<ul>
+            <li class="cl">
+                <img src="/static/logo.png" alt="Image" style="height:40px">
+            <li>
             <li v-for="nav in navs" v-bind:class="nav.active ? 'active' : ''">
               <router-link v-if="nav.link.indexOf('http') === -1" :to="nav.link" >{{ nav.title }}</router-link>
               <a v-else v-bind:href="nav.link">{{ nav.title }}</a>
@@ -102,7 +105,7 @@ $normal-color: rgba(255, 255, 255, 0.7);
   background: rgba(0, 0, 0, 0.7);
 
   .nav-container {
-    max-width: 1100px;
+    max-width: 1200px;
     position: relative;
     margin: 0 auto;
     padding-left: 15px;

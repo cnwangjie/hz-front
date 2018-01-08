@@ -26,20 +26,28 @@
           </div>
         </div>
         <div class="row class-content">
-          <div v-if="curType !== 'article'" v-for="item in contents" class="col-md-3 col-sm-6 col-xs-12">
+          <div v-if="curType !== 'article' && index < displaysum" v-for="item,index in contents" class="col-md-3 col-sm-6 col-xs-12">
             <div class="item">
               <video v-if="curType === 'video' || curType === 'anima'"
-              :src="`${apiurl}/resource/${item.path}`" preload="metadata" v-on:click="playvideo(item)"></video>
+              :src="`${apiurl}/resource/${item.path}`" preload="metadata" v-on:click="playvideo(item)" class="cvideo"></video>
               <div v-if="curType === 'photo'">
-                <router-link v-if="'link' in item && item.link" :to="isNaN(item.link) ? item.link : `/article/${item.link}`">
-                  <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
-                </router-link>
+                <div v-if="'link' in item && item.link">
+                  <router-link v-if="!isNaN(item.link)" :to="`/article/${item.link}`">
+                    <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
+                  </router-link>
+                  <a v-else :href="item.link" target="_blank">
+                    <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
+                  </a>
+                </div>
                 <img v-else :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
               </div>
               <div class="title">
                 <span>{{ item.name.split('.').slice(0, -1).join('.') }}</span>
               </div>
             </div>
+          </div>
+          <div v-if="contents.length > displaysum" class="col-sm-12" style="text-align:center;margin: 48px 0;">
+             <a class="btn btn-lg btn-primary" v-on:click="displaysum +=8">更多</a>
           </div>
           <div v-if="curType === 'article'" class="col-md-12">
             <!-- <router-link v-for="item in contents" :to="`/article/${item.id}`"><h2>{{ item.title }}</h2></router-link> -->
@@ -71,6 +79,7 @@ export default {
       curType: '',
       apiurl,
       contents: [],
+      displaysum: 16,
     }
   },
   components: {
@@ -84,6 +93,7 @@ export default {
   },
   methods: {
     changeName() {
+      this.displaysum = 16
       this.curClass = this.$route.params.name
       this.curType = this.$route.params.type
       this.changeContent()
@@ -129,6 +139,9 @@ export default {
   padding-top: 40px;
   min-height: 400px;
 }
+.cvideo{
+  background-color: black;
+}
 .class-detail {
   a {
     color: #5d5d5d;
@@ -150,6 +163,9 @@ export default {
   .title {
     width: 100%;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }
 </style>

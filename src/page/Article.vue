@@ -7,7 +7,7 @@
         <div class="col-sm-offset-1" v-bind:class="side ? 'col-sm-7' : 'col-sm-10'">
           <div class="article">
             <div class="article-head">
-              <h3>{{ title }}</h3>
+              <h2>{{ title }}</h2>
             </div>
             <div class="article-content" v-html="content">
             </div>
@@ -79,16 +79,12 @@ export default {
   top: 10px;
   min-width: 60px;
   padding: 24px;
-  height: 24px;
   line-height: 24px;
-  h3 {
-    font-size: 48px;
-  }
   word-wrap: break-word;
   font-weight: 500;
 }
 .article-content {
-  padding: 82px 5px 12px;
+  padding: 0;
 }
 img {
   max-width: 100%;
