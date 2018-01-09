@@ -205,6 +205,7 @@ export default {
       }
     },
     newArticle() {
+      this.savesuccess = null
       this.linkedImages = []
       this.moding = Object.assign({}, newArticle)
     },
@@ -293,6 +294,7 @@ export default {
         if ('status' in json) {
           this.uploadmsg = json
           if (json.status === 'success') {
+            this.toUploadFile = {}
             editResourceInfo({
               path: json.resource.path,
               link: this.moding.id + '',
