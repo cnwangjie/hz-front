@@ -170,7 +170,7 @@ export default {
       })
     },
     removeArticle(id) {
-      if (confirm(`确定删除《${this.articles[id].title}》 吗？`)) {
+      if (confirm(`确定删除《${this.articles.filter(i => i.id === id).shift().title}》 吗？`)) {
         deleteArticle(id)
         this.articles = this.articles.filter(i => i.id != id)
       }
