@@ -37,7 +37,7 @@
             data-trigger="click"
             :clipdata="f.path" class="btn btn-sm btn-info clipbtn" v-if="!f.isdir">复制链接</a>
             <a v-on:click="changePath(f.path)" class="btn btn-sm btn-primary" v-if="f.isdir">进入目录</a>
-            <a v-on:click="remove(f.path)" class="btn btn-sm btn-danger" v-if="false">删除</a>
+            <a v-on:click="remove(f.path)" class="btn btn-sm btn-danger">删除</a>
             <a v-on:click="preview(f.path)" class="btn btn-sm" v-if="!f.isdir && isVisable(f.name)">设置属性</a>
           </td>
         </tr>
@@ -167,6 +167,7 @@ import {
   uploadFile,
   getResourceInfo,
   editResourceInfo,
+  deleteResource,
 } from './../../service/getData'
 
 export default {
@@ -341,6 +342,13 @@ export default {
         }
       })
     },
+    remove(path) {
+      if (confirm(`确定删除 ${path} ?`)) {
+        deleteResource(path).then(() => {
+          this.changePath(this.curpath)
+        })
+      }
+    }
   }
 }
 </script>

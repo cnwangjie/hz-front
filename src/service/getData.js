@@ -45,6 +45,8 @@ export const getLastestArticle = ({page, size = 10}) => {
 
 export const getArticle = id => fetchData(`/api/article/${id}`)
 
+export const getArticleLinkedImage = id => fetchData(`/api/article/${id}/image`)
+
 export const getNav = () => fetchData(`/api/nav`)
 
 export const getArticleContains = word => fetchData(`/api/article/search`, 'GET', {word})
@@ -68,6 +70,8 @@ export const editArticle = (id, obj) => fetchData(`/api/article/${id}/edit`, 'PO
 export const getAllCates = () => fetchData(`/api/cate/all`)
 
 export const getResources = path => fetchData(`/api/resource/list`, 'GET', {path})
+
+export const deleteResource = path => fetchData(`/api/resource/delete`, 'POST', {path})
 
 export const getResourceInfo = path => fetchData(`/api/resource/get`, 'GET', {path})
 

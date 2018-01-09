@@ -28,7 +28,7 @@
       <tbody>
         <tr v-for="a in articles" v-if="!a.hide">
           <td>{{ a.id }}</td>
-          <td>{{ a.title }}</td>
+          <td><router-link :to="'/article/' + a.id">{{ a.title }}</router-link></td>
           <td>{{ a.cates.map(i => cates[i].name).join(',') }}</td>
           <td>
             <!-- <a v-on:click="modifyAritcle(a.id)" class="btn btn-sm btn-warning">编辑</a> -->
@@ -170,8 +170,10 @@ export default {
       })
     },
     removeArticle(id) {
-      deleteArticle(id)
-      this.articles = this.articles.filter(i => i.id != id)
+      if (confirm(`确定删除《${this.articles[id].title}》 吗？`)) {
+        deleteArticle(id)
+        this.articles = this.articles.filter(i => i.id != id)
+      }
     },
     newArticle() {
       $('#modarticle').modal('show')
