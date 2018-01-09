@@ -14,6 +14,7 @@ import Admin from '@/page/admin/Index'
 import ArticleAdmin from '@/page/admin/ArticleAdmin'
 import ResourceAdmin from '@/page/admin/ResourceAdmin'
 import ArticleEdit from '@/page/admin/ArticleEdit'
+import AdminLogin from '@/page/admin/Login'
 
 Vue.use(Router)
 
@@ -68,6 +69,10 @@ export default new Router({
       path: '/archive',
       component: Archive,
       name: 'archive'
+    },
+    {
+      path: '/admin/login',
+      component: AdminLogin,
     },
     {
       path: '/admin',

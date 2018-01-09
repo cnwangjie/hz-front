@@ -9,7 +9,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <router-link class="navbar-brand" :to="'/admin'">管理页</router-link>
+          <router-link class="navbar-brand" :to="'/admin/article'">管理页</router-link>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
@@ -103,6 +103,7 @@ export default {
     }
   },
   created() {
+    this.$router.push('/admin/article')
   },
   updated() {
     this.authTest()
@@ -111,16 +112,15 @@ export default {
     authTest() {
       const token = localStorage.getItem('admin-token')
       if (!token) {
-        $('#loginform').modal('show')
+        this.$router.replace('/admin/login')
       } else if (!this.token) {
         authValid().then(valid => {
           if (!valid) {
             console.log(valid)
             localStorage.removeItem('admin-token')
-            $('#loginform').modal('show')
+            this.$router.replace('/admin/login')
           } else {
             this.token = localStorage.getItem('admin-token')
-            $('#loginform').modal('hide')
           }
         })
       }
@@ -140,7 +140,6 @@ export default {
     logout() {
       localStorage.removeItem('admin-token')
       this.token = ''
-      location.reload()
     }
   }
 }
