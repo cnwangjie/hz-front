@@ -103,7 +103,7 @@ export default {
     }
   },
   created() {
-    this.$router.push('/admin/article')
+
   },
   updated() {
     this.authTest()
