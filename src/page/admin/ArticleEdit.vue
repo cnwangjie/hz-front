@@ -45,9 +45,18 @@
 
   <div class="">
     <label>内容</label>
+    <a v-if="editor === 'ueditor'" v-on:click="editor = 'quill'">切换到新编辑器</a>
     <ueditor
-    v-model="moding.content"
-    ref="myUeditor"></ueditor>
+      v-if="editor === 'ueditor'"
+      v-model="moding.content"
+      ref="myUeditor">
+    </ueditor>
+    <quill-editor
+      v-if="editor === 'quill'"
+      v-model="moding.content"
+      :options="quillOption"
+      ref="myQuillEditor"
+    ></quill-editor>
   </div>
 
 
@@ -61,8 +70,9 @@
         </div>
         <div class="modal-body">
 
-          <div class="form-group">
+          <div class="form-group" :class="uploadImageNotSelectCate === true ? 'has-warning' : ''">
             <label>分类</label>
+            <label v-if="uploadImageNotSelectCate" class="control-label">请选择分类</label>
             <select class="form-control" v-model="uploadImageCateId">
               <option v-for="cate in cates"
                 v-bind:value="cate.id">
@@ -126,6 +136,7 @@
 import {apiurl} from '../../service/config'
 import ueditor from '@/components/Ueditor'
 import {mapState, mapMutations} from 'vuex'
+import {quillEditor} from 'vue-quill-editor'
 
 import {
   getArticle,
@@ -154,6 +165,7 @@ export default {
       cates: [],
       linkedImages: [],
       uploadImageCateId: null,
+      uploadImageNotSelectCate: null,
       uploadApiUrl: `${apiurl}/api/resource/upload`,
       uploadHeaders: {
         Authorization: localStorage.getItem('admin-token'),
@@ -163,6 +175,30 @@ export default {
       uploadmsg: null,
       uploadProgress: 0,
       previewingResource: {},
+      editor: 'ueditor',
+      quillOption: {
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{ 'header': 1 }, { 'header': 2 }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],
+            [{ 'indent': '-1' }, { 'indent': '+1' }],
+            [{ 'direction': 'rtl' }],
+            [{ 'size': ['small', false, 'large', 'huge'] }],
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'font': [] }],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'align': [] }],
+            ['clean'],
+            ['link', 'image', 'video']
+          ],
+          syntax: {
+            highlight: text => hljs.highlightAuto(text).value
+          }
+        }
+      },
     }
   },
   computed: {
@@ -170,9 +206,15 @@ export default {
   },
   components: {
     ueditor,
+    quillEditor,
   },
   watch: {
-    '$route': 'changeContent'
+    '$route': 'changeContent',
+    ['uploadImageCateId'](val) {
+      if (val !== null) {
+        this.uploadImageNotSelectCate = false
+      }
+    },
   },
   created() {
     this.getCates()
@@ -279,10 +321,18 @@ export default {
       this.toUploadFile = e.target.files
     },
     upload() {
+      if (!this.uploadImageCateId) {
+        this.uploadImageNotSelectCate = true
+        return
+      }
+
+      const path = 'photo/' + this.cates
+        .filter(cate => cate.id === this.uploadImageCateId)
+        .shift()
+        .name
+
       this.uploading = true
       const that = this
-      const path = 'photo/' + (this.uploadImageCateId ? this.cates
-        .filter(cate => cate.id === this.uploadImageCateId).shift().name : '')
       uploadFile({
         path,
         files: this.toUploadFile,
