@@ -126,16 +126,14 @@
     </div>
   </div>
 
-
-  <div class="ditu">
-    <div class="zhushi"> © 2017 All Rights Reserved.</div>
-  </div>
+  <image-footer></image-footer>
 
 </div>
 </template>
 
 <script>
 import navbar from './../components/Navbar'
+import imageFooter from './../components/ImageFooter'
 // import {apiurl} from './../service/config'
 
 import {
@@ -156,6 +154,7 @@ export default {
   },
   components: {
     navbar,
+    imageFooter,
   },
   created() {
     getLastestArticle({page: 1}).then(articles => {
@@ -238,8 +237,10 @@ export default {
           font-size: 24px;
           color: gray;
           font-weight: lighter;
-          text-shadow: 2px 2px 10px black;
+          transition: 0.2s;
           &:hover {
+            transition: 0.2s;
+            text-shadow: 2px 2px 10px black;
             text-decoration: none;
           }
         }

@@ -18,14 +18,12 @@
     </div>
 
   </div>
-  <foot></foot>
 </div>
 </template>
 
 <script>
 import sidebar from './../components/Sidebar'
 import navbar from './../components/Navbar'
-import foot from './../components/Foot'
 import {getLastestArticle} from './../service/getData'
 
 export default {
@@ -38,7 +36,6 @@ export default {
   components: {
     sidebar,
     navbar,
-    foot
   },
   watch: {
     'page': 'getData'

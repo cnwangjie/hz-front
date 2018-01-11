@@ -37,17 +37,15 @@
 		</div>
 	</div>
 
+  <image-footer></image-footer>
 
-  <div class="ditu">
-    <div class="zhushi"> © 2017 All Rights Reserved.</div>
-  </div>
 </div>
 </template>
 
 <script>
 import navbar from './../components/Navbar'
 import blank from './../components/Blank'
-import foot from './../components/Foot'
+import imageFooter from './../components/ImageFooter'
 import {getNav} from './../service/getData'
 
 export default {
@@ -63,7 +61,7 @@ export default {
   components: {
     navbar,
     blank,
-    foot,
+    imageFooter,
   },
   created() {
     this.classes = `徽商.徽州宗族.新安理学.新安医学.新安画派.徽州文书.徽州村落.徽派版画.徽派建筑.徽州三雕.文房四宝.徽州历史人物.徽派朴学`.split('.').map(i => {

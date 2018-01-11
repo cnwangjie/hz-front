@@ -51,21 +51,6 @@ body {
   background: #e7e5d0;
 }
 
-.ditu {
-  text-align: right;
-  line-height: 120px;
-  overflow:hidden;
-  width: 100%;
-  background-image: url(/static/weitu.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 100% ;
-  .zhushi {
-    font-size: 20px;
-    margin-right: 8%;
-  }
-}
-
 .gray-bg {
   background: #f6f9fc;
 }

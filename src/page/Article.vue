@@ -18,17 +18,16 @@
     </div>
 
   </div>
-  <div class="ditu">
-    <div class="zhushi"> © 2017 All Rights Reserved.</div>
-  </div>
+
+  <image-footer></image-footer>
+
 </div>
 </template>
 
 <script>
 import sidebar from './../components/Sidebar'
 import navbar from './../components/Navbar'
-import blank from './../components/Blank'
-import foot from './../components/Foot'
+import imageFooter from './../components/ImageFooter'
 import {getArticle} from './../service/getData'
 import {mapState, mapMutations} from 'vuex'
 
@@ -47,8 +46,7 @@ export default {
   components: {
     sidebar,
     navbar,
-    blank,
-    foot,
+    imageFooter,
   },
   created() {
     window.document.title = `loading | 徽州文化服务云平台`

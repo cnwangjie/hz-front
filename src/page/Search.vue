@@ -22,7 +22,7 @@
       <sidebar></sidebar>
     </div>
   </div>
-  <foot></foot>
+  <image-footer></image-footer>
 </div>
 </template>
 
@@ -30,7 +30,7 @@
 import sidebar from './../components/Sidebar'
 import navbar from './../components/Navbar'
 import blank from './../components/Blank'
-import foot from './../components/Foot'
+import imageFooter from './../components/ImageFooter'
 import {getArticleContains} from './../service/getData'
 
 export default {
@@ -45,8 +45,7 @@ export default {
   components: {
     sidebar,
     navbar,
-    foot,
-    blank,
+    imageFooter,
   },
   watch: {
     '$route': 'searchArticle'
