@@ -39,6 +39,8 @@ const fetchData = (url = '', method = 'GET', data = {}) => {
     })
 }
 
+export const getServerStatus = () => fetchData(`/api/test`)
+
 export const getLastestArticle = ({page, size = 10}) => {
   return fetchData(`/api/article/lastest`, 'GET', {page, size})
 }

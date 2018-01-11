@@ -3,16 +3,31 @@
 
     <router-view></router-view>
 
+    <div v-if="!serverUp" style="background: rgba(0, 0, 0, 0.85); color: rgb(232, 232, 232); line-height: 1.2; white-space: pre; font-family: Menlo, Consolas, monospace; font-size: 13px; position: fixed; z-index: 9999; padding: 10px; left: 0px; right: 0px; top: 0px; bottom: 0px; overflow: auto; text-align: left;">
+        服务器宕机
+    </div>
+
   </div>
 </template>
 
 <script>
+import {getServerStatus} from './service/getData'
 import './assets/jquery.min.js'
 import './assets/bootstrap.min.js'
 export default {
   name: 'app',
+  data() {
+    return {
+      serverUp: true,
+    }
+  },
   components: {
-  }
+  },
+  created() {
+    getServerStatus().then(obj => {
+      this.serverUp = typeof obj === 'object' && obj.status === 'Success!'
+    })
+  },
 }
 </script>
 

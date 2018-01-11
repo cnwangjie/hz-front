@@ -15,6 +15,7 @@ import ArticleAdmin from '@/page/admin/ArticleAdmin'
 import ResourceAdmin from '@/page/admin/ResourceAdmin'
 import ArticleEdit from '@/page/admin/ArticleEdit'
 import AdminLogin from '@/page/admin/Login'
+import MultiContentHomePage from '@/page/MultiContentHomePage'
 
 Vue.use(Router)
 
@@ -22,7 +23,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Home,
+      component: MultiContentHomePage,
       name: 'home'
     },
     {
