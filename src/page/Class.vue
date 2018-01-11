@@ -1,5 +1,5 @@
 <template lang="html">
-<div>
+<div class="class">
   <navbar></navbar>
 
   <!-- <blank></blank> -->
@@ -9,7 +9,7 @@
 		<div class="gtco-container container">
 			<div class="row">
 
-				<div v-show="!active" class="col-lg-4 col-md-4 col-sm-6" v-for="item, index in classes">
+				<!-- <div v-show="!active" class="col-lg-4 col-md-4 col-sm-6" v-for="item, index in classes">
 					<router-link :to="'/class/' + item.title" class="gtco-card-item card-item-ide">
 						<figure>
 							<div class="overlay">
@@ -29,10 +29,8 @@
 
 						</div>
 					</router-link>
-				</div>
-
-
-        <router-view></router-view>
+				</div> -->
+        <class-selector></class-selector>
 			</div>
 		</div>
 	</div>
@@ -46,7 +44,9 @@
 import navbar from './../components/Navbar'
 import blank from './../components/Blank'
 import imageFooter from './../components/ImageFooter'
+import classSelector from './../components/ClassSelector'
 import {getNav} from './../service/getData'
+import classBtn from './../assets/classBtn'
 
 export default {
   data() {
@@ -62,13 +62,12 @@ export default {
     navbar,
     blank,
     imageFooter,
+    classSelector,
   },
   created() {
-    this.classes = `徽商.徽州宗族.新安理学.新安医学.新安画派.徽州文书.徽州村落.徽派版画.徽派建筑.徽州三雕.文房四宝.徽州历史人物.徽派朴学`.split('.').map(i => {
-      return {
-        title: i
-      }
-    })
+    if (window.innerWidth > 767 &&
+      !this.$route.params.name)
+      this.$router.replace('/class/' + Object.keys(classBtn).shift() + '/photo')
   },
   methods: {
     checkStatus() {
@@ -79,6 +78,28 @@ export default {
 </script>
 
 <style lang="scss">
+
+.class {
+  .container {
+    background-color: #fff;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 20px;
+    max-width: 1500px;
+    box-shadow: 0px 0px 20px black;
+  }
+  @media (max-width: 767px) {
+    .container {
+      box-shadow: none;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .gtco-section {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+}
 
 .gtco-section {
   padding-top: 40px;

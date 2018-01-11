@@ -1,5 +1,5 @@
 <template lang="html">
-<div>
+<div class="class">
 
   <navbar></navbar>
 
@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="ditu">
     <div class="zhushi"> © 2017 All Rights Reserved.</div>
   </div>
@@ -67,6 +67,7 @@ export default {
 <style lang="scss">
 .detail-section {
   padding-top: 40px;
+  padding-bottom: 40px;
 }
 .class-detail {
   a {
