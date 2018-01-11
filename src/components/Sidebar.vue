@@ -16,7 +16,7 @@
     </div>
     <div class="block-content form-inline">
       <ul class="suggest-list">
-        <li v-for="article in suggest">
+        <li v-for="article, index in suggest" v-if="index < suggestSum">
           <router-link :to="`article/${article.id}`">{{ article.title }}</router-link>
         </li>
       </ul>
@@ -27,22 +27,59 @@
 </template>
 
 <script>
-import {getRandomArticle} from './../service/getData'
+import {
+  getRandomArticle,
+  getCateArticle,
+} from './../service/getData'
+import {mapState, mapMutations} from 'vuex'
+
 export default {
   data() {
     return {
       word: '',
-      suggest: []
+      suggest: [],
+      suggestSum: 5,
     }
   },
+  computed: {
+    ...mapState(['nearlyReaded']),
+  },
   created() {
-    this.getSuggestArticle()
+    this.getSuggestArticle(this.suggestSum)
   },
   methods: {
-    getSuggestArticle() {
-      getRandomArticle(5).then(obj => {
-        this.suggest = obj
+    async getSuggestArticle() {
+      this.suggest = []
+      const nearlyReadedCate = []
+      this.nearlyReaded.map(article => {
+        if ('cates' in article) {
+          article.cates.map(cate => {
+            if (nearlyReadedCate.indexOf(cate.id) === -1) {
+              nearlyReadedCate.push(cate.id)
+            }
+          })
+        }
       })
+
+      while (this.suggest.length < this.suggestSum) {
+        if (nearlyReadedCate.length > 0) {
+          const cateArticles = await getCateArticle(nearlyReadedCate.shift())
+          cateArticles.filter(article => {
+            return this.nearlyReaded.every(nearlyReadedArticle => {
+              return nearlyReadedArticle.id !== article.id
+            })
+          }).map(article => {
+            this.suggest.push(article)
+          })
+        } else {
+          await getRandomArticle(5).then(articles => {
+            articles.map(article => {
+              this.suggest.push(article)
+            })
+          })
+        }
+      }
+
     }
   }
 }

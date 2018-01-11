@@ -8,12 +8,16 @@ export default new Vuex.Store({
     navs: [],
     articles: [],
     cates: [],
+    nearlyReaded: [],
   },
   getters: {
   },
   actions: {
   },
   mutations: {
+    readed(state, article) {
+      state.nearlyReaded.push(article)
+    },
     setNavs(state, obj) {
       state.navs = obj
     },

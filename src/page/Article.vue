@@ -30,6 +30,8 @@ import navbar from './../components/Navbar'
 import blank from './../components/Blank'
 import foot from './../components/Foot'
 import {getArticle} from './../service/getData'
+import {mapState, mapMutations} from 'vuex'
+
 
 export default {
   data() {
@@ -53,9 +55,11 @@ export default {
     this.loadArticle()
   },
   methods: {
+    ...mapMutations(['readed']),
     loadArticle() {
       getArticle(this.$route.params.id).then(obj => {
         if ('title' in obj) {
+          this.readed(obj)
           this.title = obj.title
           this.content = obj.content
           window.document.title = `${obj.title} | 徽州文化服务云平台`

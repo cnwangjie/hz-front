@@ -46,8 +46,8 @@
               </div>
             </div>
           </div>
-          <div v-if="contents.length > displaysum" class="col-sm-12" style="text-align:center;margin: 48px 0;">
-             <a class="btn btn-lg btn-primary" v-on:click="displaysum +=8">更多</a>
+          <div v-if="contents.length > displaysum" style="text-align:center;margin: 48px 0;">
+             <a class="btn btn-lg btn-primary" v-on:click="displaysum += 8">更多</a>
           </div>
           <div v-if="curType === 'article'" class="col-md-12">
             <!-- <router-link v-for="item in contents" :to="`/article/${item.id}`"><h2>{{ item.title }}</h2></router-link> -->
