@@ -1,9 +1,11 @@
 <template lang="html">
 <div class="class-btn">
   <ul>
-    <li v-for="c, index in classes" v-if="index > from - 1 && index < from + length">
+    <li v-for="c, index in classes" v-if="index > from - 1 && index < from + length"
+      :style="{'max-width': 100 / col - 5 + '%'}">
       <router-link :to="'/class/' + c.title + '/' + ($route.params.type ? $route.params.type : 'photo')">
-        <img :src="'/static/rightlogo/' + c.btnImg" alt=""></img>
+        <img
+        :src="'/static/rightlogo/' + c.btnImg" alt=""></img>
       </router-link>
     </li>
   </ul>
@@ -28,14 +30,23 @@ export default {
       type: Number,
       default: Infinity,
     },
+    col: {
+      type: Number,
+      default: 1,
+    },
   },
   created() {
+    const btnSum = Object.keys(classBtn).length
+    const add = ((btnSum / this.col << 0) + 1) * this.col - btnSum
     this.classes = Object.keys(classBtn).map(i => {
       return {
         title: i,
         btnImg: classBtn[i],
       }
     })
+    for (let i = 0; i < add; i += 1) {
+      this.classes.push(this.classes[i])
+    }
   }
 }
 </script>
@@ -50,12 +61,12 @@ export default {
     li {
       display: inline-block;
       list-style: none;
+      margin: 5px;
       img {
         width: 100%;
         height: auto;
         background-color: #e7e5d0;
         border-radius: 80px;
-        margin: 5px;
         box-shadow: 1px 1px 4px black;
         transition: 0.5s;
         &:hover {

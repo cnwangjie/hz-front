@@ -6,88 +6,68 @@
   <div class="zhutu"></div>
 
   <div class="content-section zhuye">
-    <div class="container">
+    <div class="container class-container">
 
-    <div class="col-md-2">
+      <div class="row">
+        <div class="col-md-10 col-xs-12 left-content">
+          <div class="row class-detail">
+            <div class="pull-left">
+              <router-link :to="'/class'" class="hidden-lg"><svg viewBox="0 -256 1792 1536" preserveAspectRatio="xMidYMid meet" style="pointer-events: none; display: inline-block; height: 39px;">
+                <g style="fill:#5d5d5d;opacity:0.7">
+                  <path d="M1536 640v-128q0 -53 -32.5 -90.5t-84.5 -37.5h-704l293 -294q38 -36 38 -90t-38 -90l-75 -76q-37 -37 -90 -37q-52 0 -91 37l-651 652q-37 37 -37 90q0 52 37 91l651 650q38 38 91 38q52 0 90 -38l75 -74q38 -38 38 -91t-38 -91l-293 -293h704q52 0 84.5 -37.5
+                   t32.5 -90.5z" />
+                </g>
+              </svg></router-link>
+            </div>
+            <div class="class-title">
+              <h1>{{ curClass }}</h1>
+            </div>
+            <div class="pull-right">
+              <router-link :to="`/class/${curClass}/photo`">图片</router-link>
+              <router-link :to="`/class/${curClass}/video`">视频</router-link>
+              <router-link :to="`/class/${curClass}/anima`">动漫</router-link>
+            </div>
+          </div>
+          <div class="row class-content">
+            <div v-if="curType !== 'article' " v-for="item,index in contents" class="col-md-3 col-sm-6 col-xs-12">
+              <div class="item">
+                <video v-if="curType === 'video' || curType === 'anima'"
+                 :src="`${apiurl}/resource/${item.path}`" preload="metadata" v-on:click="playvideo(item)" class="cvideo"></video>
+                <div v-if="curType === 'photo'">
+                  <div v-if="'link' in item && item.link">
+                    <router-link v-if="!isNaN(item.link)" :to="`/article/${item.link}`">
+                      <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
+                    </router-link>
+                    <a v-else :href="item.link" target="_blank">
+                      <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
+                    </a>
+                  </div>
+                  <img v-else :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
+                </div>
+                <div class="title">
+                  <span>{{ item.name.split('.').slice(0, -1).join('.') }}</span>
+                </div>
+              </div>
+            </div>
 
-        <h1 >{{ curClass }}</h1>
-        <div class="2"  style="height:500px;" :style="`background-image:url(${handledOverviews[curClass].pict})` ">
+            <div v-if="curType === 'article'" class="col-md-12">
+               <!-- <router-link v-for="item in contents" :to="`/article/${item.id}`"><h2>{{ item.title }}</h2></router-link> -->
+            </div>
+            <div v-if="contents.length === 0">
+              <h1 v-if="loading">加载中...</h1>
+              <h1 v-else>该分类下没有此类资源</h1>
+            </div>
+          </div>
+
         </div>
 
-    </div>
 
 
 
-         <div class="col-md-8 col-xs-12">
-           <div class="class-detail">
-             <div class="pull-left visible-xs">
-               <router-link :to="'/class'"><svg viewBox="0 -256 1792 1536" preserveAspectRatio="xMidYMid meet" style="pointer-events: none; display: inline-block; height: 39px;">
-                 <g style="fill:#5d5d5d;opacity:0.7">
-                   <path d="M1536 640v-128q0 -53 -32.5 -90.5t-84.5 -37.5h-704l293 -294q38 -36 38 -90t-38 -90l-75 -76q-37 -37 -90 -37q-52 0 -91 37l-651 652q-37 37 -37 90q0 52 37 91l651 650q38 38 91 38q52 0 90 -38l75 -74q38 -38 38 -91t-38 -91l-293 -293h704q52 0 84.5 -37.5
-                   t32.5 -90.5z" />
-                 </g>
-               </svg></router-link>
-             </div>
-             <div class="pull-right" style="margin-bottom:50px">
-               <router-link :to="`/class/${curClass}/photo`">图片</router-link>
-               <router-link :to="`/class/${curClass}/video`">视频</router-link>
-               <router-link :to="`/class/${curClass}/anima`">动漫</router-link>
-             </div>
-           </div>
-           <div class="3" style="height:700px; overflow-y: auto;width:100%; overflow-x:hidden; border: 1px solid #000" >
-             <div class="row class-content">
-               <div v-if="curType !== 'article' " v-for="item,index in contents" class="col-md-3 col-sm-6 col-xs-12">
-                 <div class="item">
-                   <video v-if="curType === 'video' || curType === 'anima'"
-                   :src="`${apiurl}/resource/${item.path}`" preload="metadata" v-on:click="playvideo(item)" class="cvideo"></video>
-                   <div v-if="curType === 'photo'">
-                     <div v-if="'link' in item && item.link">
-                       <router-link v-if="!isNaN(item.link)" :to="`/article/${item.link}`">
-                         <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
-                       </router-link>
-                       <a v-else :href="item.link" target="_blank">
-                         <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
-                       </a>
-                     </div>
-                     <img v-else :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
-                   </div>
-                   <div class="title">
-                     <span>{{ item.name.split('.').slice(0, -1).join('.') }}</span>
-                   </div>
-                 </div>
-               </div>
 
-               <div v-if="curType === 'article'" class="col-md-12">
-                 <!-- <router-link v-for="item in contents" :to="`/article/${item.id}`"><h2>{{ item.title }}</h2></router-link> -->
-               </div>
-               <div v-if="contents.length === 0">
-                 <h1 v-if="loading">加载中...</h1>
-                 <h1 v-else>该分类下没有此类资源</h1>
-               </div>
-             </div>
-
-           </div>
-
-         </div>
-
-
-
-        <div class="row">
-
-          <div class="col-md-1 hidden-xs">
-            <div class="1" style="height:100px">
-            </div>
-            <class-selector
-              :from="0"
-              :length="8">
-            </class-selector>
-          </div>
-        <div class="col-md-1 hidden-xs">
-          <div class="1" style="height:100px">
-          </div>
+        <div class="col-md-2 visible-lg">
           <class-selector
-            :from="8"
-            :length="8">
+            :col="2">
           </class-selector>
         </div>
       </div>
@@ -183,13 +163,39 @@ export default {
 
 
 <style lang="scss">
+
+@media (min-width: 1500px) {
+  .class-container {
+    width: 1500px;
+  }
+  .class-detail {
+    .pull-right {
+      height: 72px;
+      line-height: 72px;
+      a {
+        font-size: 42px;
+      }
+    }
+  }
+  .class-title {
+    display: inline-block;
+    margin-left: 40px;
+    h1 {
+      font-size: 72px;
+      text-shadow: 1px 1px 3px #795548;
+      color: #9E9E9E;
+    }
+  }
+}
+
+
 .content-section {
   padding-top: 40px;
   padding-bottom: 40px;
   min-height: 400px;
 }
-.cvideo{
-  background-color: black;
+.left-content {
+  border-right: 1px solid black;
 }
 .class-detail {
   a {
@@ -201,10 +207,15 @@ export default {
     display: inline-block;
     margin: 0;
   }
+
 }
 .class-content {
-  padding-top: 50px;
+  border-top: 1px solid black;
+  margin-top: 20px;
+  padding-top: 20px;
   position: relative;
+  height: 700px;
+  overflow-y: auto;
   video, img {
     width: 100%;
     height: 200px;
@@ -218,7 +229,6 @@ export default {
   }
 }
 @media (max-width: 767px) {
-
   .container {
     box-shadow: none;
     margin-top: 0;

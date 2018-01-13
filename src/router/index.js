@@ -27,6 +27,10 @@ export default new Router({
       name: 'home'
     },
     {
+      path: '/tradition',
+      component: Home,
+    },
+    {
       path: '/class',
       component: Class,
       name: 'class',

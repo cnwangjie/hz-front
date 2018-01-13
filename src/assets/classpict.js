@@ -1,4 +1,4 @@
-export default[
+export default [
   {
     name: '徽商',
     pict: '/static/huishang.png'

@@ -57,7 +57,7 @@
       </div>
       <div class="col-md-4 block">
         <div class="title">
-          关于徽州文化
+          <router-link :to="'/tradition'">徽州文化界定</router-link>
         </div>
         <div class="content">
           <div class="text">
@@ -225,6 +225,9 @@ export default {
       height: 45px;
       font-size: 26px;
       font-weight: bold;
+      a {
+        color: black;
+      }
       .more {
         font-size: 13px;
         color: gray;
