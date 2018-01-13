@@ -212,7 +212,7 @@ export default {
   margin-top: 20px;
   padding-top: 20px;
   position: relative;
-  height: 700px;
+  height: 680px;
   overflow-y: auto;
   video, img {
     width: 100%;
