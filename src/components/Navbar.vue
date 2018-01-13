@@ -4,14 +4,13 @@
 		<div class="nav-container">
 
 			<div class="row">
-        <div class="col-sm-4 text-left" style="padding-top:13px">
+
+        <div class="col-sm-4 text-left" >
+          <img src="/static/logo.png" alt="Image" style="height:40px">
           <span class="title">徽州文化服务云平台</span>
         </div>
-				<div class="col-sm-8 text-right">
+				<div class="col-sm-8 text-right" style="padding-top:9px">
 					<ul>
-            <li class="cl">
-                <img src="/static/logo.png" alt="Image" style="height:40px">
-            <li>
             <li v-for="nav in navs" v-bind:class="nav.active ? 'active' : ''">
               <router-link v-if="nav.link.indexOf('http') === -1" :to="nav.link" >{{ nav.title }}</router-link>
               <a v-else v-bind:href="nav.link">{{ nav.title }}</a>

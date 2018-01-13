@@ -11,7 +11,7 @@
     <div class="col-md-2">
 
         <h1 >{{ curClass }}</h1>
-        <div class="2"  style="height:500px" :style="`background-image:url(${handledOverviews[curClass].pict})` ">
+        <div class="2"  style="height:500px;" :style="`background-image:url(${handledOverviews[curClass].pict})` ">
         </div>
 
     </div>
@@ -28,13 +28,13 @@
                  </g>
                </svg></router-link>
              </div>
-             <div class="pull-right">
+             <div class="pull-right" style="margin-bottom:50px">
                <router-link :to="`/class/${curClass}/photo`">图片</router-link>
                <router-link :to="`/class/${curClass}/video`">视频</router-link>
                <router-link :to="`/class/${curClass}/anima`">动漫</router-link>
              </div>
            </div>
-           <div class="3" style="height:800px; overflow-y: auto;width:100%; margin-top:70px; padding-top:50px" >
+           <div class="3" style="height:700px; overflow-y: auto;width:100%; overflow-x:hidden; border: 1px solid #000" >
              <div class="row class-content">
                <div v-if="curType !== 'article' " v-for="item,index in contents" class="col-md-3 col-sm-6 col-xs-12">
                  <div class="item">
@@ -75,7 +75,7 @@
         <div class="row">
 
           <div class="col-md-1 hidden-xs">
-            <div class="1" style="height:150px">
+            <div class="1" style="height:100px">
             </div>
             <class-selector
               :from="0"
@@ -83,7 +83,7 @@
             </class-selector>
           </div>
         <div class="col-md-1 hidden-xs">
-          <div class="1" style="height:150px">
+          <div class="1" style="height:100px">
           </div>
           <class-selector
             :from="8"
@@ -181,8 +181,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
 
+<style lang="scss">
 .content-section {
   padding-top: 40px;
   padding-bottom: 40px;
@@ -218,6 +218,7 @@ export default {
   }
 }
 @media (max-width: 767px) {
+
   .container {
     box-shadow: none;
     margin-top: 0;
