@@ -30,7 +30,7 @@
 						</div>
 					</router-link>
 				</div> -->
-        <class-selector></class-selector>
+        <class-selector :col="3"></class-selector>
 			</div>
 		</div>
 	</div>
