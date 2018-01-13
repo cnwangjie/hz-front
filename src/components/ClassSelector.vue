@@ -2,7 +2,7 @@
 <div class="class-btn">
   <ul>
     <li v-for="c, index in classes" v-if="index > from - 1 && index < from + length"
-      :style="{'max-width': 100 / col - 5 + '%'}">
+      :style="{'max-width': 99 / col + '%'}">
       <router-link :to="'/class/' + c.title + '/' + ($route.params.type ? $route.params.type : 'photo')">
         <img
         :src="'/static/rightlogo/' + c.btnImg" alt=""></img>
@@ -61,7 +61,7 @@ export default {
     li {
       display: inline-block;
       list-style: none;
-      margin: 5px;
+      padding: 5px;
       img {
         width: 100%;
         height: auto;
@@ -79,7 +79,6 @@ export default {
     @media (max-width: 767px) {
       li {
         max-width: 33%;
-        padding: 5px;
       }
     }
   }

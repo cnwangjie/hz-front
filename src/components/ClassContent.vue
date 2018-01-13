@@ -9,7 +9,7 @@
     <div class="container class-container">
 
       <div class="row">
-        <div class="col-md-10 col-xs-12 left-content">
+        <div class="col-md-10 col-sm-10 col-xs-12 left-content">
           <div class="row class-detail">
             <div class="pull-left">
               <router-link :to="'/class'" class="hidden-lg"><svg viewBox="0 -256 1792 1536" preserveAspectRatio="xMidYMid meet" style="pointer-events: none; display: inline-block; height: 39px;">
@@ -60,12 +60,7 @@
           </div>
 
         </div>
-
-
-
-
-
-        <div class="col-md-2 visible-lg">
+        <div class="col-md-2 col-sm-2 hidden-xs">
           <class-selector
             :col="2">
           </class-selector>
@@ -194,8 +189,10 @@ export default {
   padding-bottom: 40px;
   min-height: 400px;
 }
-.left-content {
-  border-right: 1px solid black;
+@media (min-width: 767px) {
+  .left-content {
+    border-right: 1px solid black;
+  }
 }
 .class-detail {
   a {
