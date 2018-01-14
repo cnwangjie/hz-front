@@ -68,9 +68,8 @@
       </div>
     </div>
   </div>
-  <div class="ditu">
-    <div class="zhushi"> © 2017 All Rights Reserved.</div>
-  </div>
+
+    <image-footer></image-footer>
 </div>
 </template>
 
@@ -81,6 +80,7 @@ import {getResources, getCateArticle, getAllCates} from './../service/getData'
 import {apiurl} from './../service/config'
 import classSelector from './../components/ClassSelector'
 import overviews from './../assets/classpict'
+import imageFooter from './../components/ImageFooter'
 
 const handledOverviews = overviews.reduce((r, i) => {
   r[i.name] = i
@@ -104,6 +104,7 @@ export default {
   components: {
     navbar,
     classSelector,
+    imageFooter
   },
   watch: {
     '$route': 'changeName'
@@ -211,7 +212,7 @@ export default {
   margin-top: 20px;
   padding-top: 20px;
   position: relative;
-  height: 700px;
+  height: 680px;
   overflow-y: auto;
   video, img {
     width: 100%;
