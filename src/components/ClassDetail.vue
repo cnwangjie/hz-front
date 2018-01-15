@@ -18,14 +18,14 @@
               </g>
             </svg></router-link>
           </div>
-          <h1>{{ curClass }}</h1>
+          <h1>{{ curClass }}<player v-if="'sound' in detail[curClass]" :src="detail[curClass].sound"></player></h1>
           <div class="pull-right">
             <router-link :to="`/class/${curClass}/photo`">图片</router-link>
             <router-link :to="`/class/${curClass}/video`">视频</router-link>
             <router-link :to="`/class/${curClass}/anima`">动漫</router-link>
           </div>
         </div>
-        <div v-html="detail[curClass].content"></div>
+        <div v-if="curClass" v-html="detail[curClass].content"></div>
       </div>
     </div>
   </div>
@@ -39,27 +39,44 @@
 <script>
 import navbar from './../components/Navbar'
 import classDetailData from './../assets/classDetail.js'
+import {getTTSSound} from './../service/getData'
+import player from './../components/Player'
 
 export default {
   data() {
     return {
       detail: classDetailData,
-      curClass: ''
+      curClass: '',
+      playing: false,
     }
   },
   components: {
     navbar,
+    player,
   },
   watch: {
     'this.$route': 'changeName'
   },
   created() {
-    this.curClass = this.$route.params.name
+    this.changeName()
   },
-  mathods: {
+  methods: {
     changeName() {
       this.curClass = this.$route.params.name
-    }
+      if (!('sound' in this.detail[this.curClass])) {
+        const tmpEl = document.createElement('div')
+        tmpEl.innerHTML = this.detail[this.curClass].content
+        const text = tmpEl.innerText
+        console.log(text)
+        getTTSSound({text}).then(obj => {
+          console.log(obj)
+          if ('soundpath' in obj) {
+            this.detail[this.curClass].sound = obj.soundpath
+            this.$forceUpdate()
+          }
+        })
+      }
+    },
   }
 }
 </script>

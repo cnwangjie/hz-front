@@ -79,6 +79,8 @@ export const getResourceInfo = path => fetchData(`/api/resource/get`, 'GET', {pa
 
 export const editResourceInfo = obj => fetchData(`/api/resource/edit-info`, 'POST', obj)
 
+export const getTTSSound = ({articleid, text}) => fetchData(`/api/resource/tts`, 'POST', articleid ? {articleid} : {text})
+
 export const mkdir = (path, name) => fetchData(`/api/resource/mkdir`, 'POST', {path, name})
 
 export const authValid = () => fetchData(`/auth/test`, 'POST').then(json => {

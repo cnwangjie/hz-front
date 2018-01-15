@@ -30,7 +30,8 @@
   </div>
 
   <div class="text">
-      <div class="sample">
+      <player class="pull-right" :src="jiedingsound"></player>
+      <div class="sample" id="jieding">
         <p>刘伯山认为徽州文化即是指发生与存在于历史上徽州的以及由此发生辐射、影响于外的典型封建文化。</p>
         <p>其一，我们说的徽州文化是指历史上徽州区划范围内的文化。
           其地理区域范围包括当年徽州府辖的6个县，即歙县、休宁、黟县、祁门、绩溪和婺源。</p>
@@ -57,7 +58,8 @@
 
 
   <div class="neirong">
-    <div class="pict hidden-xs" :style="`background-image:url(${handledOverviews[dangqian].pict})`"> </div>
+    <div class="pict hidden-xs" :style="`background-image:url(${handledOverviews[dangqian].pict})`"></div>
+    <player class="pull-right" v-if="'sound' in handledOverviews[dangqian]" :src="handledOverviews[dangqian].sound"></player>
     <div class="nr" v-html="handledOverviews[dangqian].content"></div>
   </div>
 
@@ -74,8 +76,9 @@ import navbar from './../components/Navbar'
 import foot from './../components/Foot'
 import blank from './../components/Blank'
 import searchForm from './../components/SearchForm'
+import player from './../components/Player'
 import overviews from './../assets/homeSection'
-import {getLastestArticle} from './../service/getData'
+import {getLastestArticle, getTTSSound} from './../service/getData'
 
 const handledOverviews = overviews.reduce((r, i) => {
   r[i.name] = i
@@ -88,6 +91,7 @@ export default {
       overviews,
       handledOverviews,
       dangqian: Object.keys(handledOverviews).shift(),
+      jiedingsound: '',
     }
   },
   components: {
@@ -96,9 +100,29 @@ export default {
     blank,
     searchForm,
     foot,
+    player,
   },
   created() {
     window.document.title = '首页 | 徽州文化服务云平台'
+
+    Object.keys(handledOverviews).map(key => {
+      const tmpEl = document.createElement('div')
+      tmpEl.innerHTML = handledOverviews[key].content
+      const text = tmpEl.innerText
+      getTTSSound({text}).then(obj => {
+        if ('soundpath' in obj) {
+          handledOverviews[key].sound = obj.soundpath
+        }
+      })
+    })
+  },
+  updated() {
+    const jiedingText = document.getElementById('jieding').innerText
+    getTTSSound({text: jiedingText}).then(obj => {
+      if ('soundpath' in obj) {
+        this.jiedingsound = obj.soundpath
+      }
+    })
   },
   methods: {
   }
