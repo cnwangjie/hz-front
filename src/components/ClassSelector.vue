@@ -37,7 +37,7 @@ export default {
   },
   created() {
     const btnSum = Object.keys(classBtn).length
-    const add = ((btnSum / this.col << 0) + 1) * this.col - btnSum
+    const add = ((btnSum / this.col << 0) + (btnSum / this.col)==0 ? 0:1) * this.col - btnSum
     this.classes = Object.keys(classBtn).map(i => {
       return {
         title: i,

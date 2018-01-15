@@ -13,5 +13,6 @@ export default {
   "徽州历史人物": "huizhoumingren.png",
   "徽派朴学": "huizhoupuxue.png",
   "行知书院": "行知书院.png",
-  "徽州古城": "徽州古城.png"
+  "徽州古城": "徽州古城.png",
+  "徽州戏曲": "徽州戏曲.png"
 }
