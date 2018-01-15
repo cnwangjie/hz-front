@@ -23,6 +23,7 @@
               <h1>{{ curClass }}</h1>
             </div>
             <div class="pull-right">
+              <router-link :to="`/class/${curClass}`">详情</router-link>
               <router-link :to="`/class/${curClass}/photo`">图片</router-link>
               <router-link :to="`/class/${curClass}/video`">视频</router-link>
               <router-link :to="`/class/${curClass}/anima`">动漫</router-link>
@@ -214,7 +215,12 @@ export default {
   position: relative;
   height: 680px;
   overflow-y: auto;
-  video, img {
+  video {
+    width: 100%;
+    height: 200px;
+    background-color: black;
+  }
+  img {
     width: 100%;
     height: 200px;
   }
