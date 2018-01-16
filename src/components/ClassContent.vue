@@ -30,20 +30,20 @@
             </div>
           </div>
           <div class="row class-content">
-            <div v-if="curType !== 'article' " v-for="item,index in contents" class="col-md-3 col-sm-6 col-xs-12">
+            <div v-if="curType !== 'article' " v-for="item, index in contents" class="col-md-3 col-sm-6 col-xs-12">
               <div class="item">
-                <video v-if="curType === 'video' || curType === 'anima'"
-                 :src="`${apiurl}/resource/${item.path}`" preload="metadata" v-on:click="playvideo(item)" class="cvideo"></video>
-                <div v-if="curType === 'photo'">
+                <video v-if="isVideo(item.name)"
+                 :src="item.url" preload="metadata" v-on:click="playvideo(item)" class="cvideo"></video>
+                <div v-if="isPhoto(item.name)">
                   <div v-if="'link' in item && item.link">
                     <router-link v-if="!isNaN(item.link)" :to="`/article/${item.link}`">
-                      <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
+                      <img :src="item.url" :alt="item.name">
                     </router-link>
                     <a v-else :href="item.link" target="_blank">
-                      <img :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
+                      <img :src="item.url" :alt="item.name">
                     </a>
                   </div>
-                  <img v-else :src="`${apiurl}/resource/${item.path}`" :alt="item.name">
+                  <img v-else :src="item.url" :alt="item.name">
                 </div>
                 <div class="title">
                   <span>{{ item.name.split('.').slice(0, -1).join('.') }}</span>
@@ -150,6 +150,16 @@ export default {
         })
       }
       this.loading = false
+    },
+    isPhoto(filename) {
+      const suffix = filename.split('.').pop()
+      const photoSuffix = ['jpg', 'jpeg', 'webp', 'gif', 'png']
+      return photoSuffix.indexOf(suffix) !== -1
+    },
+    isVideo(filename) {
+      const suffix = filename.split('.').pop()
+      const photoSuffix = ['mp4']
+      return photoSuffix.indexOf(suffix) !== -1
     },
     playvideo(item) {
       window.open(item.url)
