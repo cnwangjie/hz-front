@@ -32,8 +32,11 @@
           <div class="row class-content">
             <div v-if="curType !== 'article' " v-for="item, index in contents" class="col-md-3 col-sm-6 col-xs-12">
               <div class="item">
-                <video v-if="isVideo(item.name)"
-                 :src="item.url" preload="metadata" v-on:click="playvideo(item)" class="cvideo"></video>
+                <div v-if="isVideo(item.name)">
+                  <img v-if="item.thumb" :src="item.thumb.url" :alt="item.name" v-on:click="playvideo(item)"></img>
+                  <video v-else
+                  :src="item.url" preload="metadata" v-on:click="playvideo(item)" class="cvideo"></video>
+                </div>
                 <div v-if="isPhoto(item.name)">
                   <div v-if="'link' in item && item.link">
                     <router-link v-if="!isNaN(item.link)" :to="`/article/${item.link}`">
@@ -46,7 +49,7 @@
                   <img v-else :src="item.url" :alt="item.name">
                 </div>
                 <div class="title">
-                  <span>{{ item.name.split('.').slice(0, -1).join('.') }}</span>
+                  <span>{{ basename(item.name) }}</span>
                 </div>
               </div>
             </div>
@@ -143,13 +146,40 @@ export default {
       } else {
         await getResources(`/${this.curType}/${this.curClass}`).then(obj => {
           if (Array.isArray(obj)) {
-            this.contents = obj.filter(i => !i.isDir)
+            const contents = obj.filter(i => !i.isDir)
+            const handledContents = []
+            contents.map(content => {
+              if (this.isVideo(content.name)) {
+                const sameNameContents = contents.filter(snc => {
+                  return this.isPhoto(snc.name) &&
+                    this.basename(snc.name) === this.basename(content.name)
+                })
+                if (sameNameContents.length > 0) {
+                  content.thumb = sameNameContents.shift()
+                  sameNameContents.map(i => i.isThumb = true)
+                }
+                handledContents.push(content)
+              }
+            })
+            contents.map(content => {
+              if (content.isThumb || this.isVideo(content.name)) {
+
+              } else {
+                handledContents.push(content)
+              }
+            })
+            this.contents = handledContents
           } else {
             this.contents = []
           }
         })
       }
       this.loading = false
+    },
+    basename(filename) {
+      const nameParts = filename.split('.')
+      nameParts.pop()
+      return nameParts.join('.')
     },
     isPhoto(filename) {
       const suffix = filename.split('.').pop()
@@ -233,6 +263,7 @@ export default {
   img {
     width: 100%;
     height: 200px;
+    cursor: pointer;
   }
   .title {
     width: 100%;
