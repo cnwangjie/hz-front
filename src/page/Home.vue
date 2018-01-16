@@ -50,9 +50,7 @@
     <div class="nr" v-html="handledOverviews[dangqian].content"></div>
   </div>
 
-  <div class="ditu">
-    <div class="zhushi"> © 2017 All Rights Reserved.</div>
-  </div>
+
   <image-footer></image-footer>
 
 
