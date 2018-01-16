@@ -1,8 +1,8 @@
 <template lang="html">
-<div>
+<div class="zhuye">
   <navbar></navbar>
 
-  <blank></blank>
+  <div class="zhutu"></div>
 
   <div class="container main">
     <div class="row">
