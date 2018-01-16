@@ -1,8 +1,8 @@
 <template lang="html">
-<div>
+<div class="article-page zhuye">
   <navbar></navbar>
-  <div class="zhuye">
-    <div class="container article">
+  <div class="page-height">
+    <div class="container">
       <div class="row">
         <div class="col-sm-offset-1" v-bind:class="side ? 'col-sm-7' : 'col-sm-10'">
           <div class="article">
@@ -16,8 +16,8 @@
         <sidebar v-if="side"></sidebar>
       </div>
     </div>
-
   </div>
+
 
   <image-footer></image-footer>
 
@@ -71,24 +71,36 @@ export default {
 </script>
 
 <style lang="scss">
-
-.article {
+.article-page {
   padding-top: 40px;
-}
-.article-head {
-  text-align: center;
-  position: relative;
-  top: 10px;
-  min-width: 60px;
-  padding: 24px;
-  line-height: 24px;
-  word-wrap: break-word;
-  font-weight: 500;
-}
-.article-content {
-  padding: 0;
-}
-img {
-  max-width: 100%;
+  .page-height {
+    min-height: 100vh;
+  }
+  .container {
+    background-color: #fff;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    max-width: 1200px;
+    box-shadow: 0px 0px 20px black;
+  }
+  .article {
+    padding: 40px 0;
+  }
+  .article-head {
+    text-align: center;
+    position: relative;
+    top: 10px;
+    min-width: 60px;
+    padding: 24px;
+    line-height: 24px;
+    word-wrap: break-word;
+    font-weight: 500;
+  }
+  .article-content {
+    padding: 0;
+  }
+  img {
+    max-width: 100%;
+  }
 }
 </style>
