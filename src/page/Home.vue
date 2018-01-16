@@ -31,19 +31,6 @@
 
   <div class="text">
       <player class="pull-right" :src="jiedingsound"></player>
-      <div class="sample" id="jieding">
-        <p>刘伯山认为徽州文化即是指发生与存在于历史上徽州的以及由此发生辐射、影响于外的典型封建文化。</p>
-        <p>其一，我们说的徽州文化是指历史上徽州区划范围内的文化。
-          其地理区域范围包括当年徽州府辖的6个县，即歙县、休宁、黟县、祁门、绩溪和婺源。</p>
-        <p>其二，徽州的历史至少有五、六千年，其文化当然可归为广义的大徽州文化的范围。
-        但严格和典型意义上所说的徽州文化概念，主要还是指北宋宣和三年(公元1121年)设了徽州府后才全面崛起，
-        在明清时达到鼎盛的文化，但这一文化与其早期发展及后期演变都有内在关联。</p>
-        <p>其三，徽州文化不能仅仅指在徽州本土上存在的文化，亦还包括由徽州而发生，
-        由本籍包括寄籍、侨居外地的徽州人而创造从而辐射于外、影响于外的文化。</p>
-        <p>其四，这里所说的“文化”应是取其广义的概念，不仅指学术理论、文化艺术，还包括商业经营、宗法伦理、精神信仰、风俗民情、文献著作、社会经济、土地制度、历史人物等等。
-        如此界定的徽州文化概念，实际是将徽州历史文化作为一个独立的、多元的、系列的整体，既有显明的地理空间和时间流程上的限定性，又有内容实质上的限定性，以及由此限定而内在包括的对自身限定的一体化超越，决定了徽学研究的对象。</p>
-        <p>卞利认为徽州文化主要是指历史上由徽州人创造并根植于徽州本土，经由徽州商帮和徽州士人向外传播和辐射，进而影响其他地域文化进程的一种区域历史文化。</p>
-      </div>
   </div>
 
   <div class="pic"></div>
@@ -66,6 +53,8 @@
   <div class="ditu">
     <div class="zhushi"> © 2017 All Rights Reserved.</div>
   </div>
+  <image-footer></image-footer>
+
 
 </div>
 </template>
@@ -79,6 +68,8 @@ import searchForm from './../components/SearchForm'
 import player from './../components/Player'
 import overviews from './../assets/homeSection'
 import {getLastestArticle, getTTSSound} from './../service/getData'
+import imageFooter from './../components/ImageFooter'
+
 
 const handledOverviews = overviews.reduce((r, i) => {
   r[i.name] = i
@@ -101,6 +92,7 @@ export default {
     searchForm,
     foot,
     player,
+    imageFooter,
   },
   created() {
     window.document.title = '首页 | 徽州文化服务云平台'
