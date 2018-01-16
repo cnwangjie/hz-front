@@ -1,26 +1,32 @@
 <template lang="html">
 
   <nav class="header-nav" role="navigation">
-		<div class="nav-container">
+    <div class="nav-container">
 
-			<div class="row">
+      <div class="row">
 
         <div class="col-sm-4 text-left" >
           <img src="/static/logo.png" alt="Image" style="height:40px">
           <span class="title">徽州文化服务云平台</span>
         </div>
-				<div class="col-sm-8 text-right" style="padding-top:9px">
-					<ul>
+          <div class="col-sm-8 text-right" style="padding-top:9px">
+            <ul>
             <li v-for="nav in navs" v-bind:class="nav.active ? 'active' : ''">
               <router-link v-if="nav.link.indexOf('http') === -1" :to="nav.link" >{{ nav.title }}</router-link>
+              <a v-else-if="nav.name === 'app'" v-bind:href="nav.link"
+                v-on:mouseenter="qrcode('show')"
+                v-on:mouseleave="qrcode('hide')">{{ nav.title }}</a>
               <a v-else v-bind:href="nav.link">{{ nav.title }}</a>
             </li>
-					</ul>
-				</div>
-			</div>
+          </ul>
+          <div class="qrcode" id="qrcode">
+            <img :src="'http://hz-api.cnwangjie.com/resource/appqrcode.png'"></img>
+          </div>
+        </div>
+      </div>
 
-		</div>
-	</nav>
+    </div>
+  </nav>
 
   <!-- <div class="header">
     <ul class="nav nav-pills hz-nav hidden-xs">
@@ -83,7 +89,11 @@ export default {
         }
       }
       this.changeNavsActiveStatus(this.$route)
-    }
+    },
+    qrcode(act) {
+      if (act === 'show') $('#qrcode').show()
+      else if (act === 'hide') $('#qrcode').hide()
+    },
   }
 }
 </script>
@@ -91,8 +101,13 @@ export default {
 <style lang="scss">
 $main-color: #66D37E;
 $normal-color: rgba(255, 255, 255, 0.7);
-
 .header-nav {
+  .qrcode {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+  }
   position: fixed;
   top: 0;
   left: 0;
@@ -122,10 +137,10 @@ $normal-color: rgba(255, 255, 255, 0.7);
 
     li {
 
-      padding: 0;
+      padding: 0 0 5px 0;
       margin: 0;
       list-style: none;
-      display: inline;
+      display: inline-block;
 
       &.active > a {
           color: $main-color;

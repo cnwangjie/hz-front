@@ -103,7 +103,7 @@ export default {
     }
   },
   created() {
-
+    this.authTest()
   },
   updated() {
     this.authTest()
